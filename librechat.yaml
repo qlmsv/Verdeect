@@ -157,7 +157,7 @@ actions:
 #       - /path/to/obsidian/vault
 
 # Definition of custom endpoints
-# endpoints:
+endpoints:
   # assistants:
   #   disableBuilder: false # Disable Assistants Builder Interface by setting to `true`
   #   pollIntervalMs: 3000  # Polling interval for checking assistant updates
@@ -171,15 +171,15 @@ actions:
   #   retrievalModels: ["gpt-4-turbo-preview"]
   #   # (optional) Assistant Capabilities available to all users. Omit the ones you wish to exclude. Defaults to list below.
   #   capabilities: ["code_interpreter", "retrieval", "actions", "tools", "image_vision"]
-  # agents:
-  #   # (optional) Default recursion depth for agents, defaults to 25
-  #   recursionLimit: 50
-  #   # (optional) Max recursion depth for agents, defaults to 25
-  #   maxRecursionLimit: 100
-  #   # (optional) Disable the builder interface for agents
-  #   disableBuilder: false
-  #   # (optional) Agent Capabilities available to all users. Omit the ones you wish to exclude. Defaults to list below.
-  #   capabilities: ["execute_code", "file_search", "actions", "tools"]
+  agents:
+    # (optional) Default recursion depth for agents, defaults to 25
+    recursionLimit: 50
+    # (optional) Max recursion depth for agents, defaults to 25
+    maxRecursionLimit: 100
+    # (optional) Disable the builder interface for agents
+    disableBuilder: false
+    # (optional) Agent Capabilities available to all users. Omit the ones you wish to exclude. Defaults to list below.
+    capabilities: ["execute_code", "file_search", "actions", "tools"]
   # custom:
   #   # Groq Example
   #   - name: 'groq'
