@@ -77,6 +77,9 @@ export const useEndpoints = ({
       if (endpoints[i] === EModelEndpoint.agents && !hasAgentAccess) {
         continue;
       }
+      if (endpoints[i] === EModelEndpoint.gptPlugins) {
+        continue; // Skip gptPlugins endpoint
+      }
       if (includedEndpoints.size > 0 && !includedEndpoints.has(endpoints[i])) {
         continue;
       }
@@ -84,7 +87,7 @@ export const useEndpoints = ({
     }
 
     return result;
-  }, [endpoints, hasAgentAccess, includedEndpoints]);
+  }, [endpoints, hasAgentAccess, includedEndpoints, interfaceConfig.modelSelect]);
 
   const endpointRequiresUserKey = useCallback(
     (ep: string) => {
