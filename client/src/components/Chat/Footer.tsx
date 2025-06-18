@@ -38,7 +38,7 @@ export default function Footer({ className }: { className?: string }) {
     typeof config?.customFooter === 'string'
       ? config.customFooter
       : '[ВердИИкт ' +
-        '](https://librechat.ai) - ' +
+        '](https://verdeect.ru) - ' +
         localize('com_ui_latest_footer')
   ).split('|');
 

@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/danny-avila/LibreChat/issues"
   },
-  "homepage": "https://librechat.ai",
+  "homepage": "https://verdeect.ru",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
     "@aws-sdk/client-s3": "^3.758.0",
