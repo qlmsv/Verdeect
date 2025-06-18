@@ -84,18 +84,7 @@ export function EndpointItem({ endpoint }: EndpointItemProps) {
       >
         {endpoint.label}
       </span>
-      {/* TODO: remove this after deprecation */}
-      {endpoint.value === 'gptPlugins' && (
-        <TooltipAnchor
-          description={localize('com_endpoint_deprecated_info')}
-          aria-label={localize('com_endpoint_deprecated_info_a11y')}
-          render={
-            <span className="ml-2 rounded bg-amber-600/70 px-2 py-0.5 text-xs font-semibold text-white">
-              {localize('com_endpoint_deprecated')}
-            </span>
-          }
-        />
-      )}
+
     </div>
   );
 

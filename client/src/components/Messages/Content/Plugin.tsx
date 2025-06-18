@@ -34,8 +34,7 @@ type PluginProps = {
 const Plugin: React.FC<PluginProps> = ({ plugin }) => {
   const { isSharedConvo } = useShareContext();
   const { data: plugins = {} } = useGetEndpointsQuery({
-    enabled: !isSharedConvo,
-    select: (data) => data?.gptPlugins?.plugins,
+    enabled: false, // Disabled since we don't need to fetch plugins anymore
   });
 
   const getPluginName = useCallback(

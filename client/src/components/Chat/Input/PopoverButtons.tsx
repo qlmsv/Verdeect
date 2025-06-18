@@ -65,19 +65,7 @@ export default function PopoverButtons({
         icon: <MessagesSquared className={cn('mr-1 w-[14px]', iconClass)} />,
       },
     ],
-    [EModelEndpoint.gptPlugins]: [
-      {
-        label: localize(
-          showAgentSettings ? 'com_show_completion_settings' : 'com_show_agent_settings',
-        ),
-        buttonClass: '',
-        handler: () => {
-          setSettingsView(SettingsViews.default);
-          setShowAgentSettings((prev) => !prev);
-        },
-        icon: <GPTIcon className={cn('mr-1 w-[14px]', iconClass)} size={24} />,
-      },
-    ],
+
   };
 
   if (!endpoint) {

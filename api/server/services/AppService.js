@@ -152,7 +152,6 @@ const AppService = async (app) => {
     EModelEndpoint.google,
     EModelEndpoint.bedrock,
     EModelEndpoint.anthropic,
-    EModelEndpoint.gptPlugins,
   ];
 
   endpointKeys.forEach((key) => {
