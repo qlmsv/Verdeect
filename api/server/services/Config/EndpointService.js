@@ -21,7 +21,6 @@ module.exports = {
   config: {
     openAIApiKey,
     azureOpenAIApiKey,
-    useAzurePlugins,
     userProvidedOpenAI,
     googleKey,
     [EModelEndpoint.anthropic]: generateConfig(anthropicApiKey),

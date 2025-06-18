@@ -1,5 +1,4 @@
 const { EModelEndpoint } = require('librechat-data-provider');
-const { useAzurePlugins } = require('~/server/services/Config/EndpointService').config;
 const {
   getOpenAIModels,
   getGoogleModels,
@@ -55,7 +54,7 @@ async function loadDefaultModels(req) {
         logger.error('Error fetching Azure OpenAI models:', error);
         return [];
       }),
-      getOpenAIModels({ user: req.user.id, azure: useAzurePlugins, plugins: true }).catch(
+      getOpenAIModels({ user: req.user.id, azure: false, plugins: true }).catch(
         (error) => {
           logger.error('Error fetching Plugin models:', error);
           return [];
