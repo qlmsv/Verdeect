@@ -116,6 +116,8 @@ export default function Conversation({
 
     if (typeof title === 'string' && title.length > 0) {
       document.title = title;
+    } else {
+      document.title = 'ВердИИкт';
     }
 
     navigateToConvo(conversation, {
