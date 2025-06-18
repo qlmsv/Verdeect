@@ -62,13 +62,13 @@ interface:
       By using the Website, you acknowledge that you have read these Terms of Service and agree to be bound by them.
 
   endpointsMenu: true
-  modelSelect: true
-  parameters: true
-  sidePanel: true
-  presets: true
-  prompts: true
-  bookmarks: true
-  multiConvo: true
+  modelSelect: false
+  parameters: false
+  sidePanel: false
+  presets: false
+  prompts: false
+  bookmarks: false
+  multiConvo: false
   agents: true
 
 # Example Cloudflare turnstile (optional)
@@ -157,7 +157,7 @@ actions:
 #       - /path/to/obsidian/vault
 
 # Definition of custom endpoints
-endpoints:
+# endpoints:
   # assistants:
   #   disableBuilder: false # Disable Assistants Builder Interface by setting to `true`
   #   pollIntervalMs: 3000  # Polling interval for checking assistant updates
@@ -180,7 +180,7 @@ endpoints:
   #   disableBuilder: false
   #   # (optional) Agent Capabilities available to all users. Omit the ones you wish to exclude. Defaults to list below.
   #   capabilities: ["execute_code", "file_search", "actions", "tools"]
-  custom:
+  # custom:
   #   # Groq Example
   #   - name: 'groq'
   #     apiKey: '${GROQ_API_KEY}'
