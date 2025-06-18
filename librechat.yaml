@@ -158,7 +158,8 @@ actions:
 
 # Definition of custom endpoints
 endpoints:
-  availableEndpoints: ['agents']
+  agents: {}
+  # Disable all other endpoints by not including them
   # assistants:
   #   disableBuilder: false # Disable Assistants Builder Interface by setting to `true`
   #   pollIntervalMs: 3000  # Polling interval for checking assistant updates
