@@ -122,3 +122,4 @@ helm/**/.values.yaml
 
 # SAML Idp cert
 *.cert
+.DS_Store
