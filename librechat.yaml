@@ -157,7 +157,8 @@ actions:
 #       - /path/to/obsidian/vault
 
 # Definition of custom endpoints
-# endpoints:
+endpoints:
+  availableEndpoints: ['agents']
   # assistants:
   #   disableBuilder: false # Disable Assistants Builder Interface by setting to `true`
   #   pollIntervalMs: 3000  # Polling interval for checking assistant updates
