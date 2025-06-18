@@ -277,16 +277,16 @@ endpoints:
   #     modelDisplayLabel: 'Portkey'
   #     iconURL: https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/rjqy7ghvjoiu4cd1xjbf
 
-    # OpenAI Example
-    - name: 'openai'
-      apiKey: '${OPENAI_API_KEY}'
-      baseURL: 'https://api.openai.com/v1'
-      models:
-        default: ['gpt-4.1']
-        fetch: true
-      titleConvo: true
-      titleModel: 'gpt-4.1'
-      modelDisplayLabel: 'OpenAI'
+    # # OpenAI Example
+    # - name: 'openai'
+    #   apiKey: '${OPENAI_API_KEY}'
+    #   baseURL: 'https://api.openai.com/v1'
+    #   models:
+    #     default: ['gpt-4.1']
+    #     fetch: true
+    #   titleConvo: true
+    #   titleModel: 'gpt-4.1'
+    #   modelDisplayLabel: 'OpenAI'
 
 fileConfig:
   endpoints:
