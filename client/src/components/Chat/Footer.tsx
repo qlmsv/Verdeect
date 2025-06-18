@@ -37,7 +37,7 @@ export default function Footer({ className }: { className?: string }) {
   const mainContentParts = (
     typeof config?.customFooter === 'string'
       ? config.customFooter
-      : '[ВердИИкт ' +
+      : '[ВердИИкт' +
         '](https://verdeect.ru) - ' +
         localize('com_ui_latest_footer')
   ).split('|');

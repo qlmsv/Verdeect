@@ -36,9 +36,16 @@ export default function useAppStartup({
 
   /** Set the app title */
   useEffect(() => {
-    const appTitle = startupConfig?.appTitle || 'ВердИИкт';
-    document.title = appTitle;
-    localStorage.setItem(LocalStorageKeys.APP_TITLE, appTitle);
+    // Always set the default title first
+    document.title = 'ВердИИкт';
+    
+    // If there's a config title, use it
+    if (startupConfig?.appTitle) {
+      document.title = startupConfig.appTitle;
+    }
+    
+    // Store the title in localStorage
+    localStorage.setItem(LocalStorageKeys.APP_TITLE, document.title);
   }, [startupConfig]);
 
   /** Set the default spec's preset as default */

@@ -38,7 +38,13 @@ export default function StartupLayout({ isAuthenticated }: { isAuthenticated?: b
   }, [isAuthenticated, navigate, data]);
 
   useEffect(() => {
-    document.title = startupConfig?.appTitle || 'ВердИИкт';
+    // Set the default title immediately
+    document.title = 'ВердИИкт';
+    
+    // If there's a config title, use it, but keep our default as fallback
+    if (startupConfig?.appTitle) {
+      document.title = startupConfig.appTitle;
+    }
   }, [startupConfig?.appTitle]);
 
   useEffect(() => {

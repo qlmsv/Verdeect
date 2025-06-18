@@ -18,11 +18,13 @@ function SharedView() {
   const messagesTree = dataTree?.length === 0 ? null : (dataTree ?? null);
 
   // configure document title
-  let docTitle = '';
-  if (config?.appTitle != null && data?.title != null) {
+  let docTitle = 'ВердИИкт';
+  if (data?.title && config?.appTitle) {
     docTitle = `${data.title} | ${config.appTitle}`;
-  } else {
-    docTitle = data?.title ?? config?.appTitle ?? document.title;
+  } else if (data?.title) {
+    docTitle = data.title;
+  } else if (config?.appTitle) {
+    docTitle = config.appTitle;
   }
 
   useDocumentTitle(docTitle);
