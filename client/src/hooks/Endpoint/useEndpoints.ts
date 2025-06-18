@@ -77,9 +77,6 @@ export const useEndpoints = ({
       if (endpoints[i] === EModelEndpoint.agents && !hasAgentAccess) {
         continue;
       }
-      if (endpoints[i] === EModelEndpoint.gptPlugins) {
-        continue; // Skip gptPlugins endpoint
-      }
       if (includedEndpoints.size > 0 && !includedEndpoints.has(endpoints[i])) {
         continue;
       }
