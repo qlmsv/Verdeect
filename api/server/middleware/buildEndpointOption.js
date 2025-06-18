@@ -7,7 +7,6 @@ const {
 const azureAssistants = require('~/server/services/Endpoints/azureAssistants');
 const { getModelsConfig } = require('~/server/controllers/ModelController');
 const assistants = require('~/server/services/Endpoints/assistants');
-const gptPlugins = require('~/server/services/Endpoints/gptPlugins');
 const { processFiles } = require('~/server/services/Files/process');
 const anthropic = require('~/server/services/Endpoints/anthropic');
 const bedrock = require('~/server/services/Endpoints/bedrock');
@@ -25,8 +24,7 @@ const buildFunction = {
   [EModelEndpoint.bedrock]: bedrock.buildOptions,
   [EModelEndpoint.azureOpenAI]: openAI.buildOptions,
   [EModelEndpoint.anthropic]: anthropic.buildOptions,
-  [EModelEndpoint.gptPlugins]: gptPlugins.buildOptions,
-  [EModelEndpoint.assistants]: assistants.buildOptions,
+[EModelEndpoint.assistants]: assistants.buildOptions,
   [EModelEndpoint.azureAssistants]: azureAssistants.buildOptions,
 };
 
