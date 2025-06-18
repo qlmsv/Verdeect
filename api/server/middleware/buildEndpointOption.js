@@ -24,7 +24,7 @@ const buildFunction = {
   [EModelEndpoint.bedrock]: bedrock.buildOptions,
   [EModelEndpoint.azureOpenAI]: openAI.buildOptions,
   [EModelEndpoint.anthropic]: anthropic.buildOptions,
-[EModelEndpoint.assistants]: assistants.buildOptions,
+  [EModelEndpoint.assistants]: assistants.buildOptions,
   [EModelEndpoint.azureAssistants]: azureAssistants.buildOptions,
 };
 
@@ -53,15 +53,6 @@ async function buildEndpointOption(req, res, next) {
 
     if (endpoint !== currentModelSpec.preset.endpoint) {
       return handleError(res, { text: 'Model spec mismatch' });
-    }
-
-    if (
-      currentModelSpec.preset.endpoint !== EModelEndpoint.gptPlugins &&
-      currentModelSpec.preset.tools
-    ) {
-      return handleError(res, {
-        text: `Only the "${EModelEndpoint.gptPlugins}" endpoint can have tools defined in the preset`,
-      });
     }
 
     try {
