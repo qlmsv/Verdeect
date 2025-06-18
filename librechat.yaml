@@ -320,13 +320,3 @@ fileConfig:
 #     # instructions: "You are a memory management assistant. Store and manage user information accurately."
 #     # model_parameters:
 #     #   temperature: 0.1
-default:
-  roles:
-    USER:
-      permissions:
-        PLUGINS:
-          USE: false
-    ADMIN:
-      permissions:
-        PLUGINS:
-          USE: false
