@@ -79,10 +79,10 @@ interface:
 #    size: "normal"      # Options: "normal", "compact", "flexible", or "invisible"
 
 # Example Registration Object Structure (optional)
-registration:
-  socialLogins: ['github', 'google', 'discord', 'openid', 'facebook', 'apple', 'saml']
-  # allowedDomains:
-  # - "gmail.com"
+# registration:
+#   socialLogins: ['github', 'google', 'discord', 'openid', 'facebook', 'apple', 'saml']
+#   # allowedDomains:
+#   # - "gmail.com"
 
 
 # Example Balance settings
@@ -320,3 +320,12 @@ fileConfig:
 #     # instructions: "You are a memory management assistant. Store and manage user information accurately."
 #     # model_parameters:
 #     #   temperature: 0.1
+roles:
+  USER:
+    permissions:
+      PLUGINS:
+        USE: false
+  ADMIN:
+    permissions:
+      PLUGINS:
+        USE: false
