@@ -1,4 +1,5 @@
 const { EModelEndpoint } = require('librechat-data-provider');
+const { useAzurePlugins } = require('~/server/services/Config/EndpointService').config;
 const {
   getOpenAIModels,
   getGoogleModels,
@@ -15,32 +16,15 @@ const { logger } = require('~/config');
  */
 async function loadDefaultModels(req) {
   try {
-    const {
-      openAI,
-      azureOpenAI,
-      google,
-      anthropic,
-      azureAssistants,
-      azureOpenAIFQ,
-      custom,
-    } = {
-      openAI: process.env.OPENAI_MODELS || '',
-      azureOpenAI: process.env.AZURE_OPENAI_MODELS || '',
-      google: process.env.GOOGLE_MODELS || '',
-      anthropic: process.env.ANTHROPIC_MODELS || '',
-      azureAssistants: process.env.AZURE_ASSISTANTS_MODELS || '',
-      azureOpenAIFQ: process.env.AZURE_OPENAI_MODELS_FQ || '',
-      custom: process.env.CUSTOM_MODELS || '',
-    };
-
     const [
-      openAIModels,
-      anthropicModels,
-      azureOpenAImodels,
+      openAI,
+      anthropic,
+      azureOpenAI,
+      gptPlugins,
       assistants,
-      azureAssistantsModels,
-      googleModels,
-      bedrockModels,
+      azureAssistants,
+      google,
+      bedrock,
     ] = await Promise.all([
       getOpenAIModels({ user: req.user.id }).catch((error) => {
         logger.error('Error fetching OpenAI models:', error);
@@ -54,7 +38,7 @@ async function loadDefaultModels(req) {
         logger.error('Error fetching Azure OpenAI models:', error);
         return [];
       }),
-      getOpenAIModels({ user: req.user.id, azure: false, plugins: true }).catch(
+      getOpenAIModels({ user: req.user.id, azure: useAzurePlugins, plugins: true }).catch(
         (error) => {
           logger.error('Error fetching Plugin models:', error);
           return [];
@@ -83,6 +67,7 @@ async function loadDefaultModels(req) {
       [EModelEndpoint.agents]: openAI,
       [EModelEndpoint.google]: google,
       [EModelEndpoint.anthropic]: anthropic,
+      [EModelEndpoint.gptPlugins]: gptPlugins,
       [EModelEndpoint.azureOpenAI]: azureOpenAI,
       [EModelEndpoint.assistants]: assistants,
       [EModelEndpoint.azureAssistants]: azureAssistants,

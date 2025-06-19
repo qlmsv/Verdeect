@@ -8,6 +8,7 @@ const {
   AZURE_API_KEY: azureOpenAIApiKey,
   ANTHROPIC_API_KEY: anthropicApiKey,
   CHATGPT_TOKEN: chatGPTToken,
+  PLUGINS_USE_AZURE,
   GOOGLE_KEY: googleKey,
   OPENAI_REVERSE_PROXY,
   AZURE_OPENAI_BASEURL,
@@ -15,12 +16,17 @@ const {
   AZURE_ASSISTANTS_BASE_URL,
 } = process.env ?? {};
 
-const userProvidedOpenAI = isUserProvided(openAIApiKey);
+const useAzurePlugins = !!PLUGINS_USE_AZURE;
+
+const userProvidedOpenAI = useAzurePlugins
+  ? isUserProvided(azureOpenAIApiKey)
+  : isUserProvided(openAIApiKey);
 
 module.exports = {
   config: {
     openAIApiKey,
     azureOpenAIApiKey,
+    useAzurePlugins,
     userProvidedOpenAI,
     googleKey,
     [EModelEndpoint.anthropic]: generateConfig(anthropicApiKey),

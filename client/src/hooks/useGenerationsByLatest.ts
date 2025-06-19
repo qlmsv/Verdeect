@@ -31,6 +31,7 @@ export default function useGenerationsByLatest({
       EModelEndpoint.agents,
       EModelEndpoint.bedrock,
       EModelEndpoint.anthropic,
+      EModelEndpoint.gptPlugins,
       EModelEndpoint.azureOpenAI,
     ].find((e) => e === endpoint),
   );
@@ -52,6 +53,7 @@ export default function useGenerationsByLatest({
       EModelEndpoint.bedrock,
       EModelEndpoint.chatGPTBrowser,
       EModelEndpoint.google,
+      EModelEndpoint.gptPlugins,
       EModelEndpoint.anthropic,
     ].find((e) => e === endpoint),
   );

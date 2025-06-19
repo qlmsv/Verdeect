@@ -84,7 +84,7 @@ export const useEndpoints = ({
     }
 
     return result;
-  }, [endpoints, hasAgentAccess, includedEndpoints, interfaceConfig.modelSelect]);
+  }, [endpoints, hasAgentAccess, includedEndpoints]);
 
   const endpointRequiresUserKey = useCallback(
     (ep: string) => {

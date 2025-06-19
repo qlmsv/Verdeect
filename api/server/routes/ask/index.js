@@ -10,6 +10,7 @@ const {
   validateConvoAccess,
 } = require('~/server/middleware');
 const { isEnabled } = require('~/server/utils');
+const gptPlugins = require('./gptPlugins');
 const anthropic = require('./anthropic');
 const custom = require('./custom');
 const google = require('./google');
@@ -38,6 +39,7 @@ if (isEnabled(LIMIT_MESSAGE_USER)) {
 router.use(validateConvoAccess);
 
 router.use([`/${EModelEndpoint.azureOpenAI}`, `/${EModelEndpoint.openAI}`], openAI);
+router.use(`/${EModelEndpoint.gptPlugins}`, gptPlugins);
 router.use(`/${EModelEndpoint.anthropic}`, anthropic);
 router.use(`/${EModelEndpoint.google}`, google);
 router.use(`/${EModelEndpoint.custom}`, custom);

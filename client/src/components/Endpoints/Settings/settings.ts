@@ -23,6 +23,7 @@ export const getSettings = () => {
     settings,
     multiViewSettings: {
       [EModelEndpoint.google]: GoogleSettings,
+      [EModelEndpoint.gptPlugins]: PluginSettings,
     },
   };
 };

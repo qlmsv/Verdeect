@@ -528,7 +528,7 @@ describe('Conversation Utilities', () => {
         localStorage.clear();
       });
 
-      it('stores model for openAI endpoint', () => {
+      it('stores model for endpoint', () => {
         const conversation = {
           conversationId: '1',
           endpoint: 'openAI',
@@ -537,6 +537,19 @@ describe('Conversation Utilities', () => {
         storeEndpointSettings(conversation as any);
         const stored = JSON.parse(localStorage.getItem('lastModel') || '{}');
         expect([undefined, 'gpt-3']).toContain(stored.openAI);
+      });
+
+      it('stores secondaryModel for gptPlugins endpoint', () => {
+        const conversation = {
+          conversationId: '1',
+          endpoint: 'gptPlugins',
+          model: 'gpt-4',
+          agentOptions: { model: 'plugin-model' },
+        };
+        storeEndpointSettings(conversation as any);
+        const stored = JSON.parse(localStorage.getItem('lastModel') || '{}');
+        expect([undefined, 'gpt-4']).toContain(stored.gptPlugins);
+        expect([undefined, 'plugin-model']).toContain(stored.secondaryModel);
       });
 
       it('does nothing if conversation is null', () => {

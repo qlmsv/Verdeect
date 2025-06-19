@@ -25,6 +25,10 @@ async function loadConfigModels(req) {
     modelsConfig[EModelEndpoint.azureOpenAI] = modelNames;
   }
 
+  if (modelNames && azureEndpoint && azureEndpoint.plugins) {
+    modelsConfig[EModelEndpoint.gptPlugins] = modelNames;
+  }
+
   if (azureEndpoint?.assistants && azureConfig.assistantModels) {
     modelsConfig[EModelEndpoint.azureAssistants] = azureConfig.assistantModels;
   }

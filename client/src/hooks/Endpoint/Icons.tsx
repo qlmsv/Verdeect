@@ -63,6 +63,7 @@ const Bedrock = ({ className = '' }: IconMapProps) => {
 export const icons: IconsRecord = {
   [EModelEndpoint.azureOpenAI]: AzureMinimalIcon,
   [EModelEndpoint.openAI]: GPTIcon,
+  [EModelEndpoint.gptPlugins]: MinimalPlugin,
   [EModelEndpoint.anthropic]: AnthropicIcon,
   [EModelEndpoint.chatGPTBrowser]: LightningIcon,
   [EModelEndpoint.google]: GoogleMinimalIcon,

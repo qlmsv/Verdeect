@@ -354,7 +354,7 @@ class PluginsClient extends OpenAIClient {
     }
 
     const responseMessage = {
-      endpoint: EModelEndpoint.openAI,
+      endpoint: EModelEndpoint.gptPlugins,
       iconURL: this.options.iconURL,
       messageId: responseMessageId,
       conversationId,

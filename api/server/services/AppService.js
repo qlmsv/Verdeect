@@ -146,17 +146,16 @@ const AppService = async (app) => {
 
   endpointLocals[EModelEndpoint.agents] = agentsConfigSetup(config, agentsDefaults);
 
-  // Only add endpoints that are explicitly enabled in the config
   const endpointKeys = [
     EModelEndpoint.openAI,
     EModelEndpoint.google,
     EModelEndpoint.bedrock,
     EModelEndpoint.anthropic,
+    EModelEndpoint.gptPlugins,
   ];
 
   endpointKeys.forEach((key) => {
-    // Only add the endpoint if it exists in config and is not explicitly set to false
-    if (endpoints?.[key] !== false && endpoints?.[key] !== undefined) {
+    if (endpoints?.[key]) {
       endpointLocals[key] = endpoints[key];
     }
   });
