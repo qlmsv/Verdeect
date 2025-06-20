@@ -85,6 +85,7 @@ export function EndpointItem({ endpoint }: EndpointItemProps) {
         {endpoint.label}
       </span>
       {/* TODO: remove this after deprecation */}
+      {/* Note: gptPlugins is now hidden from the menu but this code remains for backward compatibility */}
       {endpoint.value === 'gptPlugins' && (
         <TooltipAnchor
           description={localize('com_endpoint_deprecated_info')}
