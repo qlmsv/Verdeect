@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
-import { MessageSquare, Command, DollarSign } from 'lucide-react';
-import { SettingsTabValues } from 'librechat-data-provider';
+import { MessageSquare, Command, DollarSign, Shield } from 'lucide-react';
+import { SettingsTabValues, SystemRoles } from 'librechat-data-provider';
 import { useGetStartupConfig } from '~/data-provider';
 import type { TDialogProps } from '~/common';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
@@ -23,29 +23,38 @@ import {
   Account,
   Balance,
   Personalization,
+  AdminPanel,
 } from './SettingsTabs';
-import { useMediaQuery, useLocalize, TranslationKeys } from '~/hooks';
+import { useMediaQuery, useLocalize, useAuthContext, TranslationKeys } from '~/hooks';
 import usePersonalizationAccess from '~/hooks/usePersonalizationAccess';
 import { cn } from '~/utils';
 
 export default function Settings({ open, onOpenChange }: TDialogProps) {
   const isSmallScreen = useMediaQuery('(max-width: 767px)');
   const { data: startupConfig } = useGetStartupConfig();
+  const { user } = useAuthContext();
   const localize = useLocalize();
   const [activeTab, setActiveTab] = useState(SettingsTabValues.GENERAL);
   const tabRefs = useRef({});
   const { hasAnyPersonalizationFeature, hasMemoryOptOut } = usePersonalizationAccess();
+  
+  // Check if user is admin
+  const isAdmin = user?.role === SystemRoles.ADMIN;
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     const tabs: SettingsTabValues[] = [
       SettingsTabValues.GENERAL,
       SettingsTabValues.CHAT,
-      SettingsTabValues.BETA,
-      SettingsTabValues.COMMANDS,
+      // Only show Beta for admins
+      ...(isAdmin ? [SettingsTabValues.BETA] : []),
+      // Only show Commands for admins  
+      ...(isAdmin ? [SettingsTabValues.COMMANDS] : []),
       SettingsTabValues.SPEECH,
       ...(hasAnyPersonalizationFeature ? [SettingsTabValues.PERSONALIZATION] : []),
       SettingsTabValues.DATA,
       ...(startupConfig?.balance?.enabled ? [SettingsTabValues.BALANCE] : []),
+      // Add Admin Panel tab only for admins
+      ...(isAdmin ? [SettingsTabValues.ADMIN_PANEL] : []),
       SettingsTabValues.ACCOUNT,
     ];
     const currentIndex = tabs.indexOf(activeTab);
@@ -74,6 +83,7 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
     value: SettingsTabValues;
     icon: React.JSX.Element;
     label: TranslationKeys;
+    adminOnly?: boolean;
   }[] = [
     {
       value: SettingsTabValues.GENERAL,
@@ -89,11 +99,13 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
       value: SettingsTabValues.BETA,
       icon: <ExperimentIcon />,
       label: 'com_nav_setting_beta',
+      adminOnly: true,
     },
     {
       value: SettingsTabValues.COMMANDS,
       icon: <Command className="icon-sm" />,
       label: 'com_nav_commands',
+      adminOnly: true,
     },
     {
       value: SettingsTabValues.SPEECH,
@@ -123,12 +135,21 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
           },
         ]
       : ([] as { value: SettingsTabValues; icon: React.JSX.Element; label: TranslationKeys }[])),
+    // Add Admin Panel tab only for admins
+    ...(isAdmin ? [
+      {
+        value: SettingsTabValues.ADMIN_PANEL,
+        icon: <Shield size={18} />,
+        label: 'com_nav_setting_admin_panel' as TranslationKeys,
+        adminOnly: true,
+      }
+    ] : []),
     {
       value: SettingsTabValues.ACCOUNT,
       icon: <UserIcon />,
       label: 'com_nav_setting_account',
     },
-  ];
+  ].filter(tab => !tab.adminOnly || isAdmin); // Filter out admin-only tabs for non-admin users
 
   const handleTabChange = (value: string) => {
     setActiveTab(value as SettingsTabValues);
@@ -256,6 +277,11 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
                     {startupConfig?.balance?.enabled && (
                       <Tabs.Content value={SettingsTabValues.BALANCE}>
                         <Balance />
+                      </Tabs.Content>
+                    )}
+                    {isAdmin && (
+                      <Tabs.Content value={SettingsTabValues.ADMIN_PANEL}>
+                        <AdminPanel />
                       </Tabs.Content>
                     )}
                     <Tabs.Content value={SettingsTabValues.ACCOUNT}>
