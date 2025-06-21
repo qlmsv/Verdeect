@@ -82,7 +82,7 @@ const errorMessages = {
   },
   token_balance: (json: TTokenBalance) => {
     const { balance, tokenCost, promptTokens, generations } = json;
-    const message = `Insufficient Funds! Balance: ${balance}. Prompt tokens: ${promptTokens}. Cost: ${tokenCost}.`;
+    const message = `Недостаточно средств на балансе! Текущий баланс: ${balance}. Стоимость запроса: ${tokenCost}. Для пополнения баланса обратитесь к вашему менеджеру в телеграм канале: https://t.me/verdeect`;
     return (
       <>
         {message}
