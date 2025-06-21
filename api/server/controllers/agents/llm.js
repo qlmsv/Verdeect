@@ -70,7 +70,7 @@ function initializeLLM(options) {
     configOptions.basePath = 'https://openrouter.ai/api/v1';
     configOptions.baseOptions = {
       headers: {
-        'HTTP-Referer': 'https://librechat.ai',
+        'HTTP-Referer': 'https://verdeect.ru',
         'X-Title': 'LibreChat',
       },
     };
