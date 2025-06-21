@@ -71,7 +71,7 @@ function initializeLLM(options) {
     configOptions.baseOptions = {
       headers: {
         'HTTP-Referer': 'https://verdeect.ru',
-        'X-Title': 'LibreChat',
+                  'X-Title': 'Verdeect',
       },
     };
   }

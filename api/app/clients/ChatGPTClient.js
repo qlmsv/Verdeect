@@ -268,7 +268,7 @@ class ChatGPTClient extends BaseClient {
 
     if (this.useOpenRouter) {
       opts.headers['HTTP-Referer'] = 'https://verdeect.ru';
-      opts.headers['X-Title'] = 'LibreChat';
+              opts.headers['X-Title'] = 'Verdeect';
     }
 
     /* hacky fixes for Mistral AI API:

@@ -44,12 +44,12 @@ librechat:
   #   interface:
   #     # Privacy policy settings
   #     privacyPolicy:
-  #       externalUrl: 'https://librechat.ai/privacy-policy'
+  #       externalUrl: 'https://t.me/verdeect'
   #       openNewTab: true
 
   #     # Terms of service
   #     termsOfService:
-  #       externalUrl: 'https://librechat.ai/tos'
+  #       externalUrl: 'https://t.me/verdeect'
   #       openNewTab: true
 
   #   registration:
