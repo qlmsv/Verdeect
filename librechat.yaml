@@ -62,7 +62,7 @@ interface:
       Используя Веб-сайт, вы подтверждаете, что прочитали настоящие Условия использования и соглашаетесь их соблюдать.
 
   endpointsMenu: false
-  modelSelect: true
+  modelSelect: false
   parameters: false
   sidePanel: true
   presets: false
