@@ -69,7 +69,7 @@ interface:
   prompts: false
   bookmarks: false
   multiConvo: false
-  agents: true
+  agents: false
 
 # Example Cloudflare turnstile (optional)
 #turnstile:
