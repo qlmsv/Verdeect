@@ -166,7 +166,7 @@ endpoints:
     timeoutMs: 180000  # Timeout for assistant operations
     # Should only be one or the other, either `supportedIds` or `excludedIds`
     supportedIds: ["asst_VFFDSI39ReAGX2h0oFJo14g7", "asst_F0gNn0ySrmIyCnzG04k3f8nz", "asst_ry5T916M9jVYaxOgpftdGe2Z", "asst_ZYoAU9dNq6C5jVEZCSO2LwOb"]
-    # excludedIds: ["asst_excludedAssistantId"]
+    excludedIds: ["asst_ry5T916M9jVYaxOgpftdGe2Z"]
     # Only show assistants that the user created or that were created externally (e.g. in Assistants playground).
     # privateAssistants: false # Does not work with `supportedIds` or `excludedIds`
     # (optional) Models that support retrieval, will default to latest known OpenAI models that support the feature
