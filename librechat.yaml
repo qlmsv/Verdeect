@@ -64,7 +64,7 @@ interface:
   endpointsMenu: false
   modelSelect: true
   parameters: false
-  sidePanel: false
+  sidePanel: true
   presets: false
   prompts: false
   bookmarks: false
@@ -160,19 +160,19 @@ actions:
 endpoints:
   agents: {}
   # Disable all other endpoints by not including them
-  # assistants:
-  #   disableBuilder: false # Disable Assistants Builder Interface by setting to `true`
-  #   pollIntervalMs: 3000  # Polling interval for checking assistant updates
-  #   timeoutMs: 180000  # Timeout for assistant operations
-  #   # Should only be one or the other, either `supportedIds` or `excludedIds`
-  #   supportedIds: ["asst_supportedAssistantId1", "asst_supportedAssistantId2"]
-  #   # excludedIds: ["asst_excludedAssistantId"]
-  #   # Only show assistants that the user created or that were created externally (e.g. in Assistants playground).
-  #   # privateAssistants: false # Does not work with `supportedIds` or `excludedIds`
-  #   # (optional) Models that support retrieval, will default to latest known OpenAI models that support the feature
-  #   retrievalModels: ["gpt-4-turbo-preview"]
-  #   # (optional) Assistant Capabilities available to all users. Omit the ones you wish to exclude. Defaults to list below.
-  #   capabilities: ["code_interpreter", "retrieval", "actions", "tools", "image_vision"]
+  assistants:
+    disableBuilder: false # Disable Assistants Builder Interface by setting to `true`
+    pollIntervalMs: 3000  # Polling interval for checking assistant updates
+    timeoutMs: 180000  # Timeout for assistant operations
+    # Should only be one or the other, either `supportedIds` or `excludedIds`
+    supportedIds: ["asst_VFFDSI39ReAGX2h0oFJo14g7", "asst_F0gNn0ySrmIyCnzG04k3f8nz", "asst_ry5T916M9jVYaxOgpftdGe2Z", "asst_ZYoAU9dNq6C5jVEZCSO2LwOb"]
+    # excludedIds: ["asst_excludedAssistantId"]
+    # Only show assistants that the user created or that were created externally (e.g. in Assistants playground).
+    # privateAssistants: false # Does not work with `supportedIds` or `excludedIds`
+    # (optional) Models that support retrieval, will default to latest known OpenAI models that support the feature
+    retrievalModels: ["gpt-4-turbo-preview"]
+    # (optional) Assistant Capabilities available to all users. Omit the ones you wish to exclude. Defaults to list below.
+    capabilities: ["code_interpreter", "retrieval", "actions", "tools", "image_vision"]
   # agents:
     # # (optional) Default recursion depth for agents, defaults to 25
     # recursionLimit: 50
