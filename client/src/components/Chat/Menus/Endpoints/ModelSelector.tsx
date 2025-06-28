@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { isAssistantsEndpoint, EModelEndpoint } from 'librechat-data-provider';
 import type { ModelSelectorProps } from '~/common';
 import { ModelSelectorProvider, useModelSelectorContext } from './ModelSelectorContext';
 import { renderModelSpecs, renderEndpoints, renderSearchResults } from './components';
@@ -50,6 +51,13 @@ function ModelSelectorContent() {
     [localize, modelSpecs, selectedValues, mappedEndpoints],
   );
 
+  const searchPlaceholder = useMemo(() => {
+    if (isAssistantsEndpoint(selectedValues.endpoint)) {
+      return localize('com_assistants_search_name');
+    }
+    return localize('com_endpoint_search_models');
+  }, [selectedValues.endpoint, localize]);
+
   const trigger = (
     <button
       className="my-1 flex h-10 w-full max-w-[70vw] items-center justify-center gap-2 rounded-xl border border-border-light bg-surface-secondary px-3 py-2 text-sm text-text-primary hover:bg-surface-tertiary"
@@ -76,7 +84,7 @@ function ModelSelectorContent() {
           });
         }}
         onSearch={(value) => setSearchValue(value)}
-        combobox={<input placeholder={localize('com_endpoint_search_models')} />}
+        combobox={<input placeholder={searchPlaceholder} />}
         trigger={trigger}
       >
         {searchResults ? (
