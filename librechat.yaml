@@ -170,7 +170,7 @@ endpoints:
     supportedIds: ["asst_VFFDSI39ReAGX2h0oFJo14g7", "asst_F0gNn0ySrmIyCnzG04k3f8nz", "asst_ry5T916M9jVYaxOgpftdGe2Z", "asst_ZYoAU9dNq6C5jVEZCSO2LwOb"]
     
     # ВАРИАНТ 2: Показывать всех ассистентов КРОМЕ указанных (закомментируйте supportedIds выше)
-    # excludedIds: ["asst_ry5T916M9jVYaxOgpftdGe2Z"]
+    # excludedIds:
     
     # ВАРИАНТ 3: Показывать только приватных ассистентов пользователя (закомментируйте supportedIds выше)
     # privateAssistants: true
