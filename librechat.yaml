@@ -162,7 +162,7 @@ endpoints:
   # Assistants configuration - ИСПРАВЛЕНО!
   assistants:
     disableBuilder: false
-    pollIntervalMs: 500
+    pollIntervalMs: 0
     timeoutMs: 180000
     # ВЫБЕРИТЕ ОДИН ИЗ ВАРИАНТОВ НИЖЕ:
     
