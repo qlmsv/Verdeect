@@ -1,11 +1,9 @@
 import { memo } from 'react';
 import FontSizeSelector from './FontSizeSelector';
-import { ForkSettings } from './ForkSettings';
-import ChatDirection from './ChatDirection';
 import ToggleSwitch from '../ToggleSwitch';
 import store from '~/store';
 
-const basicToggleSwitchConfigs = [
+const toggleSwitchConfigs = [
   {
     stateAtom: store.enterToSend,
     localizationKey: 'com_nav_enter_to_send',
@@ -29,74 +27,13 @@ const basicToggleSwitchConfigs = [
   },
 ];
 
-const advancedToggleSwitchConfigs = [
-  {
-    stateAtom: store.centerFormOnLanding,
-    localizationKey: 'com_nav_center_chat_input',
-    switchId: 'centerFormOnLanding',
-    hoverCardText: undefined,
-    key: 'centerFormOnLanding',
-  },
-  {
-    stateAtom: store.showThinking,
-    localizationKey: 'com_nav_show_thinking',
-    switchId: 'showThinking',
-    hoverCardText: undefined,
-    key: 'showThinking',
-  },
-  {
-    stateAtom: store.showCode,
-    localizationKey: 'com_nav_show_code',
-    switchId: 'showCode',
-    hoverCardText: undefined,
-    key: 'showCode',
-  },
-  {
-    stateAtom: store.LaTeXParsing,
-    localizationKey: 'com_nav_latex_parsing',
-    switchId: 'latexParsing',
-    hoverCardText: 'com_nav_info_latex_parsing',
-    key: 'latexParsing',
-  },
-  {
-    stateAtom: store.showScrollButton,
-    localizationKey: 'com_nav_scroll_button',
-    switchId: 'showScrollButton',
-    hoverCardText: undefined,
-    key: 'showScrollButton',
-  },
-  {
-    stateAtom: store.saveBadgesState,
-    localizationKey: 'com_nav_save_badges_state',
-    switchId: 'showBadges',
-    hoverCardText: 'com_nav_info_save_badges_state',
-    key: 'showBadges',
-  },
-  {
-    stateAtom: store.modularChat,
-    localizationKey: 'com_nav_modular_chat',
-    switchId: 'modularChat',
-    hoverCardText: undefined,
-    key: 'modularChat',
-  },
-];
-
-function Chat({ advancedMode = false }: { advancedMode?: boolean }) {
-  const toggleConfigs = advancedMode 
-    ? [...basicToggleSwitchConfigs, ...advancedToggleSwitchConfigs]
-    : basicToggleSwitchConfigs;
-
+function Chat() {
   return (
     <div className="flex flex-col gap-3 p-1 text-sm text-text-primary">
       <div className="pb-3">
         <FontSizeSelector />
       </div>
-      {advancedMode && (
-        <div className="pb-3">
-          <ChatDirection />
-        </div>
-      )}
-      {toggleConfigs.map((config) => (
+      {toggleSwitchConfigs.map((config) => (
         <div key={config.key} className="pb-3">
           <ToggleSwitch
             stateAtom={config.stateAtom}
@@ -106,7 +43,6 @@ function Chat({ advancedMode = false }: { advancedMode?: boolean }) {
           />
         </div>
       ))}
-      {advancedMode && <ForkSettings />}
     </div>
   );
 }
