@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
-import { MessageSquare, Command, DollarSign } from 'lucide-react';
+import { MessageSquare, Command, DollarSign, Settings2, Zap } from 'lucide-react';
 import { SettingsTabValues } from 'librechat-data-provider';
 import { useGetStartupConfig } from '~/data-provider';
 import type { TDialogProps } from '~/common';
@@ -33,39 +33,51 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
   const { data: startupConfig } = useGetStartupConfig();
   const localize = useLocalize();
   const [activeTab, setActiveTab] = useState(SettingsTabValues.GENERAL);
+  const [advancedMode, setAdvancedMode] = useState(false);
   const tabRefs = useRef({});
   const { hasAnyPersonalizationFeature, hasMemoryOptOut } = usePersonalizationAccess();
 
+  // Basic tabs for simple mode
+  const basicTabs = [
+    SettingsTabValues.GENERAL,
+    SettingsTabValues.CHAT,
+    SettingsTabValues.ACCOUNT,
+  ];
+
+  // All tabs for advanced mode
+  const allTabs = [
+    SettingsTabValues.GENERAL,
+    SettingsTabValues.CHAT,
+    SettingsTabValues.COMMANDS,
+    SettingsTabValues.SPEECH,
+    ...(hasAnyPersonalizationFeature ? [SettingsTabValues.PERSONALIZATION] : []),
+    SettingsTabValues.DATA,
+    ...(startupConfig?.balance?.enabled ? [SettingsTabValues.BALANCE] : []),
+    SettingsTabValues.ACCOUNT,
+    SettingsTabValues.BETA,
+  ];
+
+  const availableTabs = advancedMode ? allTabs : basicTabs;
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    const tabs: SettingsTabValues[] = [
-      SettingsTabValues.GENERAL,
-      SettingsTabValues.CHAT,
-      SettingsTabValues.BETA,
-      SettingsTabValues.COMMANDS,
-      SettingsTabValues.SPEECH,
-      ...(hasAnyPersonalizationFeature ? [SettingsTabValues.PERSONALIZATION] : []),
-      SettingsTabValues.DATA,
-      ...(startupConfig?.balance?.enabled ? [SettingsTabValues.BALANCE] : []),
-      SettingsTabValues.ACCOUNT,
-    ];
-    const currentIndex = tabs.indexOf(activeTab);
+    const currentIndex = availableTabs.indexOf(activeTab);
 
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
-        setActiveTab(tabs[(currentIndex + 1) % tabs.length]);
+        setActiveTab(availableTabs[(currentIndex + 1) % availableTabs.length]);
         break;
       case 'ArrowUp':
         event.preventDefault();
-        setActiveTab(tabs[(currentIndex - 1 + tabs.length) % tabs.length]);
+        setActiveTab(availableTabs[(currentIndex - 1 + availableTabs.length) % availableTabs.length]);
         break;
       case 'Home':
         event.preventDefault();
-        setActiveTab(tabs[0]);
+        setActiveTab(availableTabs[0]);
         break;
       case 'End':
         event.preventDefault();
-        setActiveTab(tabs[tabs.length - 1]);
+        setActiveTab(availableTabs[availableTabs.length - 1]);
         break;
     }
   };
@@ -130,6 +142,9 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
     },
   ];
 
+  // Filter tabs based on mode
+  const visibleTabs = settingsTabs.filter(tab => availableTabs.includes(tab.value));
+
   const handleTabChange = (value: string) => {
     setActiveTab(value as SettingsTabValues);
   };
@@ -166,9 +181,23 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
                 className="mb-1 flex items-center justify-between p-6 pb-5 text-left"
                 as="div"
               >
-                <h2 className="text-lg font-medium leading-6 text-text-primary">
-                  {localize('com_nav_settings')}
-                </h2>
+                <div className="flex items-center gap-3">
+                  <h2 className="text-lg font-medium leading-6 text-text-primary">
+                    {localize('com_nav_settings')}
+                  </h2>
+                  <button
+                    onClick={() => setAdvancedMode(!advancedMode)}
+                    className={cn(
+                      'flex items-center gap-1 px-2 py-1 text-xs rounded-md transition-colors',
+                      advancedMode
+                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                        : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                    )}
+                  >
+                    {advancedMode ? <Zap size={12} /> : <Settings2 size={12} />}
+                    {advancedMode ? 'Расширенный' : 'Простой'}
+                  </button>
+                </div>
                 <button
                   type="button"
                   className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-border-xheavy focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-surface-primary dark:focus:ring-offset-surface-primary"
@@ -209,7 +238,7 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
                     )}
                     onKeyDown={handleKeyDown}
                   >
-                    {settingsTabs.map(({ value, icon, label }) => (
+                    {visibleTabs.map(({ value, icon, label }) => (
                       <Tabs.Trigger
                         key={value}
                         className={cn(
@@ -228,21 +257,27 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
                   </Tabs.List>
                   <div className="overflow-auto sm:w-full sm:max-w-none md:pr-0.5 md:pt-0.5">
                     <Tabs.Content value={SettingsTabValues.GENERAL}>
-                      <General />
+                      <General advancedMode={advancedMode} />
                     </Tabs.Content>
                     <Tabs.Content value={SettingsTabValues.CHAT}>
-                      <Chat />
+                      <Chat advancedMode={advancedMode} />
                     </Tabs.Content>
-                    <Tabs.Content value={SettingsTabValues.BETA}>
-                      <Beta />
-                    </Tabs.Content>
-                    <Tabs.Content value={SettingsTabValues.COMMANDS}>
-                      <Commands />
-                    </Tabs.Content>
-                    <Tabs.Content value={SettingsTabValues.SPEECH}>
-                      <Speech />
-                    </Tabs.Content>
-                    {hasAnyPersonalizationFeature && (
+                    {advancedMode && (
+                      <Tabs.Content value={SettingsTabValues.BETA}>
+                        <Beta />
+                      </Tabs.Content>
+                    )}
+                    {advancedMode && (
+                      <Tabs.Content value={SettingsTabValues.COMMANDS}>
+                        <Commands />
+                      </Tabs.Content>
+                    )}
+                    {advancedMode && (
+                      <Tabs.Content value={SettingsTabValues.SPEECH}>
+                        <Speech />
+                      </Tabs.Content>
+                    )}
+                    {hasAnyPersonalizationFeature && advancedMode && (
                       <Tabs.Content value={SettingsTabValues.PERSONALIZATION}>
                         <Personalization
                           hasMemoryOptOut={hasMemoryOptOut}
@@ -250,10 +285,12 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
                         />
                       </Tabs.Content>
                     )}
-                    <Tabs.Content value={SettingsTabValues.DATA}>
-                      <Data />
-                    </Tabs.Content>
-                    {startupConfig?.balance?.enabled && (
+                    {advancedMode && (
+                      <Tabs.Content value={SettingsTabValues.DATA}>
+                        <Data />
+                      </Tabs.Content>
+                    )}
+                    {startupConfig?.balance?.enabled && advancedMode && (
                       <Tabs.Content value={SettingsTabValues.BALANCE}>
                         <Balance />
                       </Tabs.Content>

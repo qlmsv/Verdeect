@@ -7,20 +7,23 @@ import ToggleSwitch from '../ToggleSwitch';
 import { Dropdown } from '~/components';
 import store from '~/store';
 
-const toggleSwitchConfigs = [
-  {
-    stateAtom: store.enableUserMsgMarkdown,
-    localizationKey: 'com_nav_user_msg_markdown',
-    switchId: 'enableUserMsgMarkdown',
-    hoverCardText: undefined,
-    key: 'enableUserMsgMarkdown',
-  },
+const basicToggleSwitchConfigs = [
   {
     stateAtom: store.autoScroll,
     localizationKey: 'com_nav_auto_scroll',
     switchId: 'autoScroll',
     hoverCardText: undefined,
     key: 'autoScroll',
+  },
+];
+
+const advancedToggleSwitchConfigs = [
+  {
+    stateAtom: store.enableUserMsgMarkdown,
+    localizationKey: 'com_nav_user_msg_markdown',
+    switchId: 'enableUserMsgMarkdown',
+    hoverCardText: undefined,
+    key: 'enableUserMsgMarkdown',
   },
   {
     stateAtom: store.hideSidePanel,
@@ -119,7 +122,7 @@ export const LangSelector = ({
   );
 };
 
-function General() {
+function General({ advancedMode = false }: { advancedMode?: boolean }) {
   const { theme, setTheme } = useContext(ThemeContext);
 
   const [langcode, setLangcode] = useRecoilState(store.lang);
@@ -147,6 +150,10 @@ function General() {
     [setLangcode],
   );
 
+  const toggleConfigs = advancedMode 
+    ? [...basicToggleSwitchConfigs, ...advancedToggleSwitchConfigs]
+    : basicToggleSwitchConfigs;
+
   return (
     <div className="flex flex-col gap-3 p-1 text-sm text-text-primary">
       <div className="pb-3">
@@ -155,7 +162,7 @@ function General() {
       <div className="pb-3">
         <LangSelector langcode={langcode} onChange={changeLang} />
       </div>
-      {toggleSwitchConfigs.map((config) => (
+      {toggleConfigs.map((config) => (
         <div key={config.key} className="pb-3">
           <ToggleSwitch
             stateAtom={config.stateAtom}
@@ -165,9 +172,11 @@ function General() {
           />
         </div>
       ))}
-      <div className="pb-3">
-        <ArchivedChats />
-      </div>
+      {advancedMode && (
+        <div className="pb-3">
+          <ArchivedChats />
+        </div>
+      )}
     </div>
   );
 }

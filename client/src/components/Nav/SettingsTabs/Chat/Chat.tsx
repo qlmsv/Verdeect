@@ -5,7 +5,7 @@ import ChatDirection from './ChatDirection';
 import ToggleSwitch from '../ToggleSwitch';
 import store from '~/store';
 
-const toggleSwitchConfigs = [
+const basicToggleSwitchConfigs = [
   {
     stateAtom: store.enterToSend,
     localizationKey: 'com_nav_enter_to_send',
@@ -20,6 +20,16 @@ const toggleSwitchConfigs = [
     hoverCardText: undefined,
     key: 'maximizeChatSpace',
   },
+  {
+    stateAtom: store.saveDrafts,
+    localizationKey: 'com_nav_save_drafts',
+    switchId: 'saveDrafts',
+    hoverCardText: 'com_nav_info_save_draft',
+    key: 'saveDrafts',
+  },
+];
+
+const advancedToggleSwitchConfigs = [
   {
     stateAtom: store.centerFormOnLanding,
     localizationKey: 'com_nav_center_chat_input',
@@ -49,13 +59,6 @@ const toggleSwitchConfigs = [
     key: 'latexParsing',
   },
   {
-    stateAtom: store.saveDrafts,
-    localizationKey: 'com_nav_save_drafts',
-    switchId: 'saveDrafts',
-    hoverCardText: 'com_nav_info_save_draft',
-    key: 'saveDrafts',
-  },
-  {
     stateAtom: store.showScrollButton,
     localizationKey: 'com_nav_scroll_button',
     switchId: 'showScrollButton',
@@ -78,16 +81,22 @@ const toggleSwitchConfigs = [
   },
 ];
 
-function Chat() {
+function Chat({ advancedMode = false }: { advancedMode?: boolean }) {
+  const toggleConfigs = advancedMode 
+    ? [...basicToggleSwitchConfigs, ...advancedToggleSwitchConfigs]
+    : basicToggleSwitchConfigs;
+
   return (
     <div className="flex flex-col gap-3 p-1 text-sm text-text-primary">
       <div className="pb-3">
         <FontSizeSelector />
       </div>
-      <div className="pb-3">
-        <ChatDirection />
-      </div>
-      {toggleSwitchConfigs.map((config) => (
+      {advancedMode && (
+        <div className="pb-3">
+          <ChatDirection />
+        </div>
+      )}
+      {toggleConfigs.map((config) => (
         <div key={config.key} className="pb-3">
           <ToggleSwitch
             stateAtom={config.stateAtom}
@@ -97,7 +106,7 @@ function Chat() {
           />
         </div>
       ))}
-      <ForkSettings />
+      {advancedMode && <ForkSettings />}
     </div>
   );
 }
