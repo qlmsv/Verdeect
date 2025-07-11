@@ -12,7 +12,7 @@ cache: true
 
 # Custom interface configuration
 interface:
-  customWelcome: "Добро пожаловать в ВеридИИкт!"
+  customWelcome: "Добро пожаловать в ВердИИкт!"
   # Privacy policy settings
   privacyPolicy:
     externalUrl: 'https://t.me/verdeect'
