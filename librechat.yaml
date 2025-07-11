@@ -167,7 +167,7 @@ endpoints:
     # ВЫБЕРИТЕ ОДИН ИЗ ВАРИАНТОВ НИЖЕ:
     
     # ВАРИАНТ 1: Показывать только ассистентов конкретных ID
-    supportedIds: ["asst_VFFDSI39ReAGX2h0oFJo14g7", "asst_F0gNn0ySrmIyCnzG04k3f8nz", "asst_ry5T916M9jVYaxOgpftdGe2Z", "asst_ZYoAU9dNq6C5jVEZCSO2LwOb", "asst_kv5RjMFYokSnDnUVSgq5n2O2"]
+    supportedIds: ["asst_QVCtXzE82IPbFAOiMfJb77aY", "asst_uLp2BxMWtf4CyUNONNU5jQ0p", "asst_WE0fpPu0ibGYRAvMVqRLJsp8", "asst_kaEmqYuKHtr6tgokiaUKfMW2", "asst_G5ls7KVz1BlgQFVF5WEMwFIA", "asst_iW5CovIMgr03R48KgyI0sduB"]
     
     # ВАРИАНТ 2: Показывать всех ассистентов КРОМЕ указанных (закомментируйте supportedIds выше)
     # excludedIds:
