@@ -1,0 +1,32 @@
+# Opt-in verification only. Does not publish images or deploy any server.
+# workflow_dispatch may require this workflow to exist on the default branch.
+name: Platform OpenWebUI source build
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: platform
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare pinned OpenWebUI fork
+        run: python scripts/bootstrap_fork.py
+      - name: Install pinned upstream dependencies
+        run: npm ci
+        working-directory: platform/.work/openwebui
+      - name: Build complete upstream frontend with overlay
+        run: npm run build
+        working-directory: platform/.work/openwebui

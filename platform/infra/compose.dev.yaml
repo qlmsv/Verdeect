@@ -1,0 +1,64 @@
+# Local development only. M0.1 refuses APP_ENV=production.
+name: verdeect-development
+services:
+  gateway:
+    image: traefik:v3.3.4
+    command: ["--entrypoints.web.address=:8080", "--providers.file.filename=/etc/traefik/routes.yaml", "--api.dashboard=false"]
+    ports: ["127.0.0.1:8080:8080"]
+    volumes: ["./routes.dev.yaml:/etc/traefik/routes.yaml:ro"]
+    networks: [edge]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+  platform:
+    build: {context: "..", dockerfile: infra/Dockerfile.platform}
+    user: "${LOCAL_UID:?Run platformctl init}:${LOCAL_GID:?Run platformctl init}"
+    environment:
+      APP_ENV: "${APP_ENV:-development}"
+      DATABASE_URL: sqlite:////data/platform.db
+      INSTALLATION_ORG_ID: "${INSTALLATION_ORG_ID:?}"
+      PUBLIC_ORIGIN: "${PUBLIC_ORIGIN:?}"
+      METERING_URL: http://metering:8091
+      DELEGATION_PRIVATE_KEY_FILE: /run/keys/private.pem
+      COOKIE_SECURE: "${COOKIE_SECURE:-false}"
+      ALLOW_DEV_LOGIN: "${ALLOW_DEV_LOGIN:-false}"
+      OIDC_ISSUER: "${OIDC_ISSUER:-}"
+      OIDC_CLIENT_ID: "${OIDC_CLIENT_ID:-}"
+      OIDC_CLIENT_SECRET: "${OIDC_CLIENT_SECRET:-}"
+      OAUTH_COOKIE_SECRET: "${OAUTH_COOKIE_SECRET:?}"
+    volumes:
+      - "${DEV_STATE_DIR:?}/platform-data:/data"
+      - "${DEV_STATE_DIR:?}/keys/delegation-private.pem:/run/keys/private.pem:ro"
+    networks: [edge, metering]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    depends_on: [metering]
+  metering:
+    build: {context: "..", dockerfile: infra/Dockerfile.metering}
+    user: "${LOCAL_UID:?}:${LOCAL_GID:?}"
+    environment:
+      APP_ENV: "${APP_ENV:-development}"
+      DATABASE_URL: sqlite:////data/metering.db
+      INSTALLATION_ORG_ID: "${INSTALLATION_ORG_ID:?}"
+      DELEGATION_PUBLIC_KEY_FILE: /run/keys/public.pem
+    volumes:
+      - "${DEV_STATE_DIR:?}/metering-data:/data"
+      - "${DEV_STATE_DIR:?}/keys/delegation-public.pem:/run/keys/public.pem:ro"
+    networks: [metering]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+  openwebui:
+    profiles: [chat]
+    build: {context: "../.work/openwebui"}
+    environment:
+      WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY:?}"
+      WEBUI_AUTH: "true"
+      ENABLE_SIGNUP: "true" # Local upstream bootstrap only. NOT the final SSO configuration.
+      WEBUI_URL: "${PUBLIC_ORIGIN:?}"
+    volumes: ["openwebui-data:/app/backend/data"]
+    networks: [edge]
+    security_opt: ["no-new-privileges:true"]
+networks:
+  edge: {}
+  metering: {internal: true}
+volumes:
+  openwebui-data: {}

@@ -1,0 +1,9 @@
+FROM python:3.13-slim
+WORKDIR /app
+COPY services/platform_api/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+COPY packages/python /app/packages/python
+COPY services/platform_api /app/services/platform_api
+ENV PYTHONPATH=/app/packages/python:/app/services/platform_api PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+USER 10001:10001
+CMD ["uvicorn","verdeect_core.app:from_env","--factory","--host","0.0.0.0","--port","8090","--no-access-log"]

@@ -1,0 +1,54 @@
+name: Platform foundation checks
+on:
+  push:
+    branches: [codex/platform-m0-foundation]
+    paths:
+      - 'platform/**'
+      - '.github/workflows/platform-foundation.yml'
+  pull_request:
+    paths:
+      - 'platform/**'
+      - '.github/workflows/platform-foundation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: platform-foundation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: platform
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install test dependencies
+        run: python -m pip install -r requirements-test.txt
+      - name: Run Python tests
+        run: python -m pytest -q
+      - name: Run real two-process HTTP smoke
+        run: python scripts/smoke_local.py
+  module-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: platform
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated platform dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Compile and test module contract
+        run: npm run test:sdk

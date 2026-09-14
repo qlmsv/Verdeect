@@ -1,0 +1,17 @@
+{
+  "date": "2026-09-14",
+  "milestone": "M0.1",
+  "repository": "qlmsv/Verdeect",
+  "branch": "codex/platform-m0-foundation",
+  "source_directory": "platform",
+  "original_source_file_count": 53,
+  "expected_original_source_tree": "f0aec6a485f76376bc411e5c2d600dc94cbdb460",
+  "python_tests_passed": 68,
+  "sdk_tests_passed": 16,
+  "http_smoke_checks_passed": 8,
+  "production_ready": false,
+  "full_openwebui_build_verified": false,
+  "live_oidc_verified": false,
+  "deployed": false,
+  "github_actions_result": "see actual workflow run, not inferred from local tests"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "verdeect-platform-foundation",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:sdk": "tsc -p packages/ui-sdk/tsconfig.json",
+    "test:sdk": "npm run check:sdk && node --test tests/sdk.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}

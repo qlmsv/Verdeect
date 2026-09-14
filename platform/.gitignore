@@ -1,0 +1,15 @@
+.dev/
+.work/
+.venv/
+node_modules/
+**/dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.db
+*.sqlite*
+*.pem
+.env
+.env.*
+!.env.example
+.DS_Store

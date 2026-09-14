@@ -1,0 +1,9 @@
+[project]
+name = "verdeect-platform-foundation"
+version = "0.0.1"
+requires-python = ">=3.11"
+description = "Development milestone: platform core, metering service and controlled OpenWebUI overlay"
+[tool.pytest.ini_options]
+pythonpath = ["packages/python", "services/platform_api", "services/metering_api", "."]
+testpaths = ["tests"]
+addopts = "-ra"

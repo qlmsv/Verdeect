@@ -1,0 +1,21 @@
+/* Own UI tokens only. Upstream OpenWebUI branding and components are retained. */
+:root { --vp-bg:#ffffff; --vp-panel:#f7f7f7; --vp-text:#18181b; --vp-muted:#71717a; --vp-border:#e4e4e7; --vp-active:#ededed; --vp-radius:12px; --vp-rail:76px; }
+:root.dark { --vp-bg:#171717; --vp-panel:#202020; --vp-text:#ededed; --vp-muted:#a3a3a3; --vp-border:#363636; --vp-active:#333333; }
+.vp-page { box-sizing:border-box; max-width:1280px; margin:0 auto; padding:32px; color:var(--vp-text); font-family:system-ui,sans-serif; }
+.vp-page h1 { font-size:28px; font-weight:650; margin:0 0 8px; letter-spacing:-.025em; }
+.vp-muted { color:var(--vp-muted); font-size:14px; }
+.vp-card { border:1px solid var(--vp-border); border-radius:var(--vp-radius); padding:20px; margin-top:20px; background:var(--vp-bg); }
+.vp-page button,.vp-page input,.vp-page select { font:inherit; }
+.vp-page button { padding:9px 14px; border:1px solid var(--vp-border); border-radius:9px; cursor:pointer; background:var(--vp-active); color:var(--vp-text); }
+.vp-page button:disabled { opacity:.5; cursor:wait; }
+.vp-page input:not([type=checkbox]),.vp-page select { min-width:0; padding:9px 11px; border:1px solid var(--vp-border); border-radius:9px; background:var(--vp-bg); color:var(--vp-text); }
+.vp-page label { display:flex; flex-direction:column; gap:6px; font-size:13px; }
+.vp-page form { display:flex; flex-wrap:wrap; gap:12px; align-items:end; }
+.vp-page table { width:100%; border-collapse:collapse; font-size:14px; }
+.vp-page th,.vp-page td { border-bottom:1px solid var(--vp-border); padding:12px 8px; text-align:left; }
+.vp-page th { color:var(--vp-muted); font-weight:500; }
+.vp-error { padding:12px; border:1px solid #d97070; border-radius:9px; margin:12px 0; }
+.vp-page :focus-visible { outline:2px solid var(--vp-text); outline-offset:3px; }
+@media(max-width:700px) { .vp-page {padding:18px 14px;} .vp-card {padding:14px;} .vp-page table {font-size:12px;} }
+
+body { margin:0; background:var(--vp-bg); }

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/open-webui/open-webui.git",
+  "tag": "v0.11.3",
+  "commit": "2a960a59fe1dbbd35282f0556b3666d81102e781",
+  "root_layout_blob": "cd832fd95a19ce2d9a214aae5d8dc8c8f420923e",
+  "overlay_version": "0.0.1",
+  "verified_source_date": "2026-09-14",
+  "full_build_verified": false
+}

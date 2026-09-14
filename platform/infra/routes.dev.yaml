@@ -1,0 +1,19 @@
+http:
+  routers:
+    platform:
+      rule: "PathPrefix(`/_platform/api`)"
+      entryPoints: [web]
+      priority: 100
+      service: platform
+    openwebui:
+      rule: "PathPrefix(`/`)"
+      entryPoints: [web]
+      priority: 1
+      service: openwebui
+  services:
+    platform:
+      loadBalancer:
+        servers: [{url: "http://platform:8090"}]
+    openwebui:
+      loadBalancer:
+        servers: [{url: "http://openwebui:8080"}]
