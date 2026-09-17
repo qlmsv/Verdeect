@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Партнёрская программа VERDEECT для веб-студий и digital-агентств: подписки, внедрение, кастомные модули и поддержка B2B-клиентов." />
+  <meta name="theme-color" content="#14111f" />
+  <title>VERDEECT Partner Network</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #171322;
+      --ink-2: #28223a;
+      --paper: #f5f2ff;
+      --paper-2: #ebe5ff;
+      --violet: #7652e8;
+      --violet-deep: #4d2caa;
+      --violet-soft: #b9a8ff;
+      --mint: #dff5e8;
+      --mint-ink: #173c2a;
+      --blue: #dfe8ff;
+      --blue-ink: #25396d;
+      --coral: #ff8f74;
+      --white: #ffffff;
+      --line: rgba(37, 28, 67, 0.15);
+      --line-dark: rgba(255, 255, 255, 0.15);
+      --shadow: 0 24px 70px rgba(56, 35, 120, 0.16);
+      --radius: 16px;
+      --max: 1240px;
+      --header: 78px;
+      --ease: cubic-bezier(.16, 1, .3, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--paper); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Onest", sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: var(--violet); color: var(--white); }
+    :focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .shell { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .section { position: relative; padding: 132px 0; scroll-margin-top: var(--header); }
+    .section--dark { color: var(--white); background: var(--ink); }
+    .section--lavender { background: var(--paper-2); }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 {
+      font-family: "Unbounded", sans-serif;
+      letter-spacing: -0.035em;
+      line-height: .98;
+      text-wrap: balance;
+    }
+    h1 { font-size: clamp(3.4rem, 8.6vw, 7.3rem); max-width: 11ch; margin-bottom: 30px; }
+    h2 { font-size: clamp(2.4rem, 5vw, 5.2rem); margin-bottom: 34px; }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.55rem); line-height: 1.08; }
+    .lead { max-width: 62ch; font-size: clamp(1.15rem, 2vw, 1.45rem); color: #4c4561; }
+    .section--dark .lead { color: #d7cff3; }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      height: var(--header);
+      z-index: 50;
+      background: rgba(245, 242, 255, .88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .site-header__inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand {
+      font-family: "Unbounded", sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.04em;
+      text-decoration: none;
+    }
+    .brand span { color: var(--violet); }
+    .nav { display: flex; align-items: center; gap: 26px; }
+    .nav a { font-size: .9rem; font-weight: 600; text-decoration: none; color: #403851; }
+    .nav a:hover { color: var(--violet-deep); }
+    .header-cta, .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s ease;
+    }
+    .header-cta:hover, .button:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(23, 19, 34, .2); }
+    .button--violet { background: var(--violet); }
+    .button--ghost { background: transparent; color: var(--ink); border: 1px solid rgba(23, 19, 34, .3); }
+    .button--light { background: var(--white); color: var(--ink); }
+    .menu-button { display: none; border: 0; background: transparent; padding: 10px; color: var(--ink); }
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding-top: calc(var(--header) + 72px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.45), transparent 48%),
+        var(--paper);
+    }
+    .hero__grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr); gap: 56px; align-items: center; }
+    .hero__copy { position: relative; z-index: 2; }
+    .hero__title-accent { display: block; color: var(--violet); }
+    .hero__text { max-width: 57ch; font-size: clamp(1.15rem, 2vw, 1.45rem); color: #4d465d; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+    .hero__proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 28px;
+      margin-top: 42px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      font-weight: 600;
+      color: #4c4561;
+    }
+    .hero__proof span { display: inline-flex; align-items: center; gap: 10px; }
+    .hero__proof i { width: 8px; height: 8px; border-radius: 50%; background: var(--violet); }
+
+    .hero-visual {
+      position: relative;
+      min-height: 610px;
+      isolation: isolate;
+    }
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 70px 14px 46px 62px;
+      border-radius: 50%;
+      border: 1px solid rgba(79, 44, 170, .14);
+      transform: rotate(-13deg);
+    }
+    .orbit {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .orbit path { fill: none; stroke-linecap: round; }
+    .orbit .track { stroke: rgba(77, 44, 170, .12); stroke-width: 22; }
+    .orbit .signal { stroke: var(--violet); stroke-width: 5; stroke-dasharray: 12 20; animation: travel 14s linear infinite; }
+    .orbit .signal--alt { stroke: var(--coral); stroke-width: 3; animation-duration: 20s; animation-direction: reverse; }
+    @keyframes travel { to { stroke-dashoffset: -640; } }
+
+    .node {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 160px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      text-align: center;
+      font-family: "Unbounded", sans-serif;
+      font-size: .8rem;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      box-shadow: var(--shadow);
+    }
+    .node small { display: block; margin-top: 6px; font: 600 .72rem "Onest", sans-serif; opacity: .72; }
+    .node--studio { left: 2%; top: 14%; background: var(--mint); color: var(--mint-ink); }
+    .node--platform { right: 3%; top: 6%; background: var(--ink); color: var(--white); }
+    .node--client { right: 13%; bottom: 7%; background: var(--blue); color: var(--blue-ink); }
+    .hero-visual__core {
+      position: absolute;
+      left: 39%;
+      top: 39%;
+      width: 176px;
+      height: 132px;
+      display: grid;
+      place-items: center;
+      border-radius: 64px 64px 64px 18px;
+      background: var(--violet);
+      color: var(--white);
+      font-family: "Unbounded", sans-serif;
+      font-size: 1.35rem;
+      box-shadow: 0 26px 80px rgba(87, 49, 190, .35);
+      transform: rotate(-7deg);
+    }
+
+    .signal-line {
+      position: absolute;
+      right: -58px;
+      bottom: 120px;
+      width: 250px;
+      height: 84px;
+      border: 3px solid var(--violet-soft);
+      border-left: 0;
+      border-radius: 0 100px 100px 0;
+      opacity: .8;
+    }
+
+    .split-intro { display: grid; grid-template-columns: 1.05fr .95fr; gap: 70px; align-items: end; }
+    .problem-list { margin: 64px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .problem-list li {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) minmax(250px, .8fr);
+      gap: 28px;
+      align-items: start;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .problem-list strong { font-family: "Unbounded", sans-serif; font-size: 1.2rem; line-height: 1.15; }
+    .problem-list p { margin: 0; color: #5a526b; }
+    .problem-list__index { color: var(--violet); font: 600 1.2rem "Unbounded", sans-serif; }
+
+    .model-switch {
+      display: inline-flex;
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.55);
+      margin-bottom: 46px;
+    }
+    .model-switch button {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: transparent;
+      color: #4d455d;
+      font-weight: 700;
+    }
+    .model-switch button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+
+    .model-layout { display: grid; grid-template-columns: 1fr 1.08fr; gap: 80px; align-items: center; }
+    .model-copy h2 { max-width: 10ch; }
+    .model-copy ul { padding: 0; margin: 34px 0 0; list-style: none; }
+    .model-copy li { position: relative; padding: 14px 0 14px 34px; border-bottom: 1px solid var(--line); }
+    .model-copy li::before { content: ""; position: absolute; left: 0; top: 23px; width: 14px; height: 2px; background: var(--violet); }
+
+    .flow {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+    }
+    .flow__ring { position: absolute; width: 88%; aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(77,44,170,.16); }
+    .flow__ring:nth-child(2) { width: 62%; }
+    .flow__center {
+      z-index: 3;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--violet);
+      color: var(--white);
+      font-family: "Unbounded", sans-serif;
+      box-shadow: var(--shadow);
+    }
+    .flow__point {
+      position: absolute;
+      width: 154px;
+      min-height: 112px;
+      display: grid;
+      place-content: center;
+      text-align: center;
+      padding: 20px;
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: 0 20px 52px rgba(64, 41, 137, .13);
+      font-weight: 700;
+    }
+    .flow__point small { display: block; margin-top: 5px; font-size: .78rem; color: #675f78; font-weight: 500; }
+    .flow__point--a { left: 0; top: 8%; }
+    .flow__point--b { right: 0; top: 10%; }
+    .flow__point--c { left: 2%; bottom: 7%; }
+    .flow__point--d { right: 3%; bottom: 5%; }
+    .flow__beam { position: absolute; height: 2px; width: 33%; background: var(--violet-soft); transform-origin: left center; opacity: .8; }
+    .flow__beam--a { left: 24%; top: 29%; transform: rotate(19deg); }
+    .flow__beam--b { right: 20%; top: 31%; transform: rotate(157deg); }
+    .flow__beam--c { left: 24%; bottom: 27%; transform: rotate(-18deg); }
+    .flow__beam--d { right: 20%; bottom: 25%; transform: rotate(198deg); }
+
+    .economy-grid { display: grid; grid-template-columns: .86fr 1.14fr; gap: 72px; align-items: start; }
+    .economy-copy h2 { max-width: 10ch; }
+    .economy-copy p { color: #d8d0ec; }
+    .income-lines { margin-top: 40px; border-top: 1px solid var(--line-dark); }
+    .income-line { display: flex; justify-content: space-between; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line-dark); }
+    .income-line strong { font-family: "Unbounded", sans-serif; }
+    .income-line span { color: #c9c0e4; text-align: right; }
+
+    .calculator {
+      background: #241e34;
+      border-radius: var(--radius);
+      padding: clamp(26px, 4vw, 48px);
+      box-shadow: 0 34px 84px rgba(0,0,0,.25);
+    }
+    .calculator h3 { margin-bottom: 30px; }
+    .field { margin-bottom: 28px; }
+    .field label { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 12px; color: #ddd6f2; font-weight: 600; }
+    .field select {
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 12px;
+      background: #171322;
+      color: var(--white);
+      padding: 0 14px;
+    }
+    input[type="range"] { width: 100%; accent-color: var(--coral); }
+    .calc-output { margin-top: 38px; padding-top: 28px; border-top: 1px solid var(--line-dark); }
+    .calc-output__value { font-family: "Unbounded", sans-serif; font-size: clamp(2.2rem, 5vw, 4.6rem); line-height: 1; color: var(--violet-soft); }
+    .calc-output p { margin: 10px 0 0; color: #c9c0e4; }
+    .fineprint { margin-top: 24px; font-size: .82rem; color: #a9a0c5; }
+
+    .revenue-rail { margin-top: 70px; overflow: hidden; }
+    .revenue-rail__track {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 1fr);
+      gap: 0;
+      border-block: 1px solid var(--line);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--violet) var(--paper-2);
+    }
+    .revenue-item {
+      min-height: 260px;
+      padding: 34px 32px;
+      border-right: 1px solid var(--line);
+      scroll-snap-align: start;
+    }
+    .revenue-item strong { display: block; margin-bottom: 22px; color: var(--violet); font: 600 1.05rem "Unbounded", sans-serif; }
+    .revenue-item p { color: #5a526b; }
+    .revenue-item:last-child { border-right: 0; }
+
+    .roles { display: grid; grid-template-columns: 1fr 110px 1fr; align-items: stretch; margin-top: 64px; }
+    .role { padding: clamp(28px, 5vw, 58px); border-radius: var(--radius); }
+    .role--platform { background: #e7ddff; color: #382069; }
+    .role--partner { background: var(--mint); color: var(--mint-ink); }
+    .role h3 { font-size: clamp(1.8rem, 3vw, 3.2rem); margin-bottom: 30px; }
+    .role ul { margin: 0; padding-left: 1.1em; }
+    .role li { margin: 12px 0; }
+    .handoff { display: grid; place-items: center; }
+    .handoff span { display: grid; place-items: center; width: 58px; aspect-ratio: 1; border-radius: 50%; background: var(--violet); color: var(--white); font: 600 1.45rem "Unbounded", sans-serif; }
+
+    .cabinet-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 64px; align-items: center; }
+    .cabinet-copy ul { padding: 0; margin: 36px 0 0; list-style: none; }
+    .cabinet-copy li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .cabinet-copy li::before { content: "✓"; margin-right: 12px; color: var(--violet); font-weight: 800; }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 180px minmax(0,1fr);
+      min-height: 520px;
+      overflow: hidden;
+      border-radius: 28px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(38, 27, 79, .1);
+    }
+    .dashboard__nav { padding: 30px 22px; background: var(--ink-2); color: var(--white); }
+    .dashboard__mark { font: 700 1.4rem "Unbounded", sans-serif; color: var(--violet-soft); margin-bottom: 42px; }
+    .dashboard__nav a { display: block; padding: 9px 0; color: #dad2f1; text-decoration: none; font-size: .9rem; }
+    .dashboard__main { padding: 34px; }
+    .dashboard__head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+    .dashboard__head h3 { margin: 0; }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #45b875; box-shadow: 0 0 0 5px rgba(69,184,117,.12); }
+    .dashboard__metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+    .metric { padding: 18px; border-radius: 14px; background: var(--paper); }
+    .metric strong { display: block; font: 600 1.8rem "Unbounded", sans-serif; }
+    .metric span { color: #665e78; font-size: .82rem; }
+    .deal-table { width: 100%; border-collapse: collapse; font-size: .87rem; }
+    .deal-table th, .deal-table td { padding: 15px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+    .deal-table th { color: #6a617d; font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; }
+    .pill { display: inline-flex; padding: 6px 10px; border-radius: 999px; background: var(--mint); color: var(--mint-ink); font-size: .74rem; font-weight: 700; }
+    .pill--blue { background: var(--blue); color: var(--blue-ink); }
+
+    .journey {
+      position: relative;
+      margin-top: 66px;
+      padding-left: 20px;
+    }
+    .journey::before { content: ""; position: absolute; left: 50px; top: 30px; bottom: 30px; width: 2px; background: var(--violet-soft); }
+    .journey-step { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 34px; align-items: start; padding: 28px 0 48px; }
+    .journey-step__n { position: relative; z-index: 2; display: grid; place-items: center; width: 62px; aspect-ratio: 1; border-radius: 50%; background: var(--violet); color: var(--white); font: 600 1rem "Unbounded", sans-serif; box-shadow: 0 0 0 10px var(--paper); }
+    .journey-step h3 { margin-bottom: 10px; }
+    .journey-step p { max-width: 62ch; color: #5a526b; }
+
+    .enablement-layout { display: grid; grid-template-columns: .92fr 1.08fr; gap: 70px; align-items: start; }
+    .asset-list { margin-top: 46px; border-top: 1px solid var(--line); }
+    .asset-list div { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .asset-list strong { font-weight: 700; }
+    .asset-list span { color: #5a526b; }
+    .faq { border-top: 1px solid var(--line); }
+    details { border-bottom: 1px solid var(--line); }
+    summary { list-style: none; cursor: pointer; padding: 22px 42px 22px 0; font-weight: 700; position: relative; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; position: absolute; right: 4px; top: 17px; font: 500 1.65rem "Unbounded", sans-serif; color: var(--violet); transition: transform .25s var(--ease); }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { padding: 0 40px 22px 0; color: #5a526b; }
+
+    .cta-section { overflow: hidden; background: var(--violet); color: var(--white); }
+    .cta-section::before, .cta-section::after {
+      content: "";
+      position: absolute;
+      border: 3px solid rgba(255,255,255,.42);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .cta-section::before { width: 520px; height: 260px; right: -120px; top: 10px; transform: rotate(10deg); }
+    .cta-section::after { width: 350px; height: 350px; right: 60px; bottom: -180px; }
+    .cta-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 70px; align-items: end; }
+    .cta-grid h2 { max-width: 12ch; }
+    .cta-grid p { max-width: 58ch; color: #f0ebff; }
+    .contact-stack { display: grid; gap: 12px; min-width: 270px; }
+    .contact-stack a { color: var(--white); font-weight: 700; }
+
+    footer { padding: 30px 0; background: var(--ink); color: #d7cff3; font-size: .85rem; }
+    .footer-grid { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .nav { display: none; position: absolute; top: calc(100% + 1px); left: 0; right: 0; padding: 22px 20px 28px; background: var(--paper); border-bottom: 1px solid var(--line); flex-direction: column; align-items: flex-start; }
+      .nav.is-open { display: flex; }
+      .menu-button { display: inline-flex; }
+      .header-cta { display: none; }
+      .hero__grid, .split-intro, .model-layout, .economy-grid, .cabinet-layout, .enablement-layout, .cta-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .hero-visual { min-height: 520px; }
+      .problem-list li { grid-template-columns: 60px 1fr; }
+      .problem-list li p { grid-column: 2; }
+      .model-layout, .economy-grid, .cabinet-layout { gap: 54px; }
+      .roles { grid-template-columns: 1fr; gap: 18px; }
+      .handoff { min-height: 60px; }
+      .dashboard { grid-template-columns: 135px 1fr; }
+      .cta-grid { align-items: start; }
+    }
+
+    @media (max-width: 700px) {
+      body { font-size: 16px; }
+      .shell { width: min(calc(100% - 28px), var(--max)); }
+      .section { padding: 92px 0; }
+      h1 { font-size: clamp(3rem, 15vw, 4.6rem); }
+      h2 { font-size: clamp(2.2rem, 11vw, 3.5rem); }
+      .hero { padding-top: calc(var(--header) + 38px); }
+      .hero__grid { gap: 18px; }
+      .hero-visual { min-height: 420px; }
+      .node { width: 112px; font-size: .66rem; }
+      .hero-visual__core { left: 33%; top: 39%; width: 145px; height: 106px; font-size: 1.05rem; }
+      .signal-line { display: none; }
+      .problem-list li { grid-template-columns: 44px 1fr; gap: 16px; }
+      .model-switch { width: 100%; }
+      .model-switch button { flex: 1; padding-inline: 12px; }
+      .flow { min-height: 510px; }
+      .flow__point { width: 128px; min-height: 96px; font-size: .83rem; padding: 14px; }
+      .flow__center { width: 145px; height: 145px; font-size: .86rem; }
+      .calculator { padding: 24px; }
+      .roles { margin-top: 46px; }
+      .dashboard { grid-template-columns: 1fr; min-height: auto; }
+      .dashboard__nav { display: none; }
+      .dashboard__main { padding: 22px 16px; overflow-x: auto; }
+      .dashboard__metrics { grid-template-columns: 1fr; }
+      .deal-table { min-width: 560px; }
+      .asset-list div { grid-template-columns: 1fr; gap: 4px; }
+      .journey-step { grid-template-columns: 72px 1fr; gap: 18px; }
+      .journey::before { left: 31px; }
+      .journey-step__n { width: 48px; }
+      .contact-stack { min-width: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .001ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media print {
+      .site-header, .hero__actions, .menu-button { display: none !important; }
+      body { background: white; }
+      .section, .hero { min-height: auto; padding: 42px 0; break-inside: avoid; }
+      .reveal { opacity: 1; transform: none; }
+      .calculator { color: white; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell site-header__inner">
+      <a class="brand" href="#top">VERDEECT<span>×</span>PARTNER</a>
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <a href="#models">Модели</a>
+        <a href="#economy">Экономика</a>
+        <a href="#roles">Роли</a>
+        <a href="#cabinet">Кабинет</a>
+        <a href="#start">Старт</a>
+      </nav>
+      <a class="header-cta" href="mailto:m@mkomov.com?subject=Партнёрская программа VERDEECT">Стать партнёром</a>
+      <button class="menu-button" id="menuButton" aria-expanded="false" aria-controls="nav" aria-label="Открыть меню">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero section">
+      <div class="shell hero__grid">
+        <div class="hero__copy reveal">
+          <h1>Новый AI-доход <span class="hero__title-accent">для вашей студии</span></h1>
+          <p class="hero__text">Добавьте VERDEECT в портфель, продавайте платформу действующим B2B-клиентам и зарабатывайте на подписке, внедрении и модулях, не собирая собственную R&amp;D-команду с нуля.</p>
+          <div class="hero__actions">
+            <a class="button button--violet" href="mailto:m@mkomov.com?subject=Партнёрская программа VERDEECT">Обсудить партнёрство</a>
+            <a class="button button--ghost" href="#economy">Посчитать экономику</a>
+          </div>
+          <div class="hero__proof" aria-label="Ключевые преимущества">
+            <span><i></i>Пилотная ставка от 20%</span>
+            <span><i></i>Две модели сотрудничества</span>
+            <span><i></i>Клиент остаётся в вашем контуре</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Схема взаимодействия студии, VERDEECT и клиента">
+          <svg class="orbit" viewBox="0 0 640 640" aria-hidden="true">
+            <path class="track" d="M92 170C174 52 380 28 506 124S631 385 516 501 210 624 92 497 5 292 92 170Z"/>
+            <path class="signal" d="M92 170C174 52 380 28 506 124S631 385 516 501 210 624 92 497 5 292 92 170Z"/>
+            <path class="signal signal--alt" d="M125 508C39 386 65 176 196 93s331-37 402 107 0 333-153 396-244 34-320-88Z"/>
+          </svg>
+          <div class="node node--studio">ВЕБ-СТУДИЯ<small>доверие и клиент</small></div>
+          <div class="node node--platform">VERDEECT<small>платформа и 2-я линия</small></div>
+          <div class="node node--client">B2B-КЛИЕНТ<small>задачи и рост</small></div>
+          <div class="hero-visual__core">REVENUE<br/>LOOP</div>
+          <div class="signal-line" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--lavender">
+      <div class="shell">
+        <div class="split-intro reveal">
+          <h2>AI уже продаётся вашим клиентам. Вопрос только кем.</h2>
+          <p class="lead">У веб-студии уже есть главное: доверие, договоры, доступ к владельцам процессов и понимание бизнеса клиента. VERDEECT добавляет продукт, архитектуру и техническую глубину.</p>
+        </div>
+        <ol class="problem-list reveal">
+          <li>
+            <span class="problem-list__index">01</span>
+            <strong>Клиенты просят AI</strong>
+            <p>Но каждый запрос превращается в отдельное исследование, подбор сервисов и рискованный кастом.</p>
+          </li>
+          <li>
+            <span class="problem-list__index">02</span>
+            <strong>Свою платформу строить долго</strong>
+            <p>Нужны разработка, безопасность, модели, инфраструктура, поддержка и постоянные обновления.</p>
+          </li>
+          <li>
+            <span class="problem-list__index">03</span>
+            <strong>Разовая работа не создаёт MRR</strong>
+            <p>VERDEECT переводит AI-внедрение из единичного проекта в повторяемую подписочную модель.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="models">
+      <div class="shell">
+        <div class="model-switch reveal" role="group" aria-label="Выбор модели партнёрства">
+          <button type="button" data-model="reseller" aria-pressed="true">Reseller</button>
+          <button type="button" data-model="referral" aria-pressed="false">Referral</button>
+        </div>
+        <div class="model-layout">
+          <div class="model-copy reveal">
+            <h2 id="modelTitle">Вы продаёте под своим договором</h2>
+            <p class="lead" id="modelLead">Партнёр покупает VERDEECT по партнёрской цене, включает сервис в собственный договор и сам принимает оплату от клиента.</p>
+            <ul id="modelBenefits">
+              <li>Клиент остаётся в вашем коммерческом контуре</li>
+              <li>Доход формируется из разницы между партнёрской и розничной ценой</li>
+              <li>Удобно для клиентов со сложной службой безопасности и закупками</li>
+            </ul>
+          </div>
+
+          <div class="flow reveal" aria-live="polite">
+            <div class="flow__ring"></div><div class="flow__ring"></div>
+            <span class="flow__beam flow__beam--a"></span><span class="flow__beam flow__beam--b"></span><span class="flow__beam flow__beam--c"></span><span class="flow__beam flow__beam--d"></span>
+            <div class="flow__point flow__point--a" id="flowA">Клиент<small>оплачивает студии</small></div>
+            <div class="flow__point flow__point--b" id="flowB">Студия<small>ведёт сделку</small></div>
+            <div class="flow__point flow__point--c" id="flowC">Лицензия<small>по партнёрской цене</small></div>
+            <div class="flow__point flow__point--d" id="flowD">Поддержка<small>1-я и 2-я линия</small></div>
+            <div class="flow__center" id="flowCenter">RESELLER<br/>MODEL</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="economy">
+      <div class="shell economy-grid">
+        <div class="economy-copy reveal">
+          <h2>Доход растёт вместе с клиентской базой</h2>
+          <p class="lead">Партнёрская экономика состоит не из одной комиссии. Подписка создаёт повторный доход, а внедрение и модули увеличивают маржу.</p>
+          <div class="income-lines">
+            <div class="income-line"><strong>Подписка</strong><span>регулярная комиссия или скидка</span></div>
+            <div class="income-line"><strong>Внедрение</strong><span>настройка процессов и обучение</span></div>
+            <div class="income-line"><strong>Модули</strong><span>кастомная разработка под клиента</span></div>
+            <div class="income-line"><strong>Поддержка</strong><span>первая линия в вашей модели</span></div>
+          </div>
+        </div>
+
+        <form class="calculator reveal" onsubmit="return false" aria-label="Калькулятор партнёрского дохода">
+          <h3>Быстрый расчёт MRR</h3>
+          <div class="field">
+            <label for="tariff">Тариф <span id="tariffPrice">34 900 ₽</span></label>
+            <select id="tariff">
+              <option value="14900">START: 14 900 ₽/мес</option>
+              <option value="34900" selected>BUSINESS: 34 900 ₽/мес</option>
+              <option value="74900">ULTRA: 74 900 ₽/мес</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="clients">Активные клиенты <span id="clientsValue">5</span></label>
+            <input id="clients" type="range" min="1" max="50" value="5" />
+          </div>
+          <div class="field">
+            <label for="commission">Партнёрская доля <span id="commissionValue">20%</span></label>
+            <input id="commission" type="range" min="10" max="30" step="1" value="20" />
+          </div>
+          <div class="calc-output">
+            <div class="calc-output__value" id="monthlyIncome">34 900 ₽</div>
+            <p>ориентировочный ежемесячный доход партнёра только с подписок</p>
+          </div>
+          <p class="fineprint">Расчёт иллюстративный. Финальная тарифная сетка, проценты, налоги и период выплат закрепляются в партнёрском соглашении.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section--lavender">
+      <div class="shell reveal">
+        <h2>Один продукт. Шесть линий выручки.</h2>
+        <p class="lead">Начните с базовой лицензии и расширяйте решение по мере зрелости клиента.</p>
+      </div>
+      <div class="shell revenue-rail reveal">
+        <div class="revenue-rail__track" tabindex="0" aria-label="Источники выручки">
+          <article class="revenue-item"><strong>01</strong><h3>AI-платформа</h3><p>Единый интерфейс для моделей, корпоративных знаний и рабочих задач.</p></article>
+          <article class="revenue-item"><strong>02</strong><h3>Готовые ассистенты</h3><p>HR, финансы, право, поиск, документы, отчёты и презентации.</p></article>
+          <article class="revenue-item"><strong>03</strong><h3>Кастомные модули</h3><p>Разработка под конкретный процесс, компанию или отрасль.</p></article>
+          <article class="revenue-item"><strong>04</strong><h3>Интеграции</h3><p>CRM, 1С, документы, календари и внутренние сервисы клиента.</p></article>
+          <article class="revenue-item"><strong>05</strong><h3>Внедрение</h3><p>Настройка ролей, процессов, сценариев и обучение команды.</p></article>
+          <article class="revenue-item"><strong>06</strong><h3>Поддержка</h3><p>Первая линия у партнёра, сложные вопросы и платформа у VERDEECT.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roles">
+      <div class="shell reveal">
+        <h2>Каждый отвечает за свою сильную сторону</h2>
+        <p class="lead">Студия сохраняет отношения с клиентом. VERDEECT обеспечивает технологическую основу и развитие продукта.</p>
+        <div class="roles">
+          <article class="role role--platform">
+            <h3>VERDEECT</h3>
+            <ul>
+              <li>Развитие ядра и обновления</li>
+              <li>Безопасность и стабильность</li>
+              <li>Сложная техническая поддержка</li>
+              <li>Разработка кастомных модулей</li>
+              <li>Материалы и обучение партнёра</li>
+            </ul>
+          </article>
+          <div class="handoff" aria-hidden="true"><span>×</span></div>
+          <article class="role role--partner">
+            <h3>ПАРТНЁР</h3>
+            <ul>
+              <li>Поиск и ведение своих клиентов</li>
+              <li>Презентация и подбор тарифа</li>
+              <li>Внедрение и обучение команды</li>
+              <li>Первая линия поддержки</li>
+              <li>Сбор потребностей и допродажи</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--lavender" id="cabinet">
+      <div class="shell cabinet-layout">
+        <div class="cabinet-copy reveal">
+          <h2>Прозрачный кабинет партнёра</h2>
+          <p class="lead">Концепт интерфейса: все лиды, лицензии, начисления, модули и материалы в одном месте.</p>
+          <ul>
+            <li>Регистрация и закрепление лида</li>
+            <li>Статусы сделки и следующий шаг</li>
+            <li>Активные лицензии и тарифы</li>
+            <li>Начисления и история выплат</li>
+            <li>Подключённые модули и допродажи</li>
+            <li>Документы и материалы партнёра</li>
+          </ul>
+        </div>
+
+        <div class="dashboard reveal" aria-label="Концепт кабинета партнёра">
+          <aside class="dashboard__nav">
+            <div class="dashboard__mark">V</div>
+            <a href="#cabinet">Лиды</a><a href="#cabinet">Клиенты</a><a href="#cabinet">Лицензии</a><a href="#cabinet">Модули</a><a href="#cabinet">Выплаты</a><a href="#cabinet">Материалы</a>
+          </aside>
+          <div class="dashboard__main">
+            <div class="dashboard__head"><h3>Web Studio Dashboard</h3><span class="status-dot" title="Система активна"></span></div>
+            <div class="dashboard__metrics">
+              <div class="metric"><strong>18</strong><span>зарегистрированных лидов</span></div>
+              <div class="metric"><strong>9</strong><span>активных клиентов</span></div>
+              <div class="metric"><strong>₽</strong><span>начисления и выплаты</span></div>
+            </div>
+            <table class="deal-table">
+              <thead><tr><th>Клиент</th><th>Тариф</th><th>Статус</th><th>Следующий шаг</th></tr></thead>
+              <tbody>
+                <tr><td>ООО «Альфа»</td><td>Business</td><td><span class="pill">Оплачено</span></td><td>Onboarding</td></tr>
+                <tr><td>УК «Комфорт»</td><td>Start</td><td><span class="pill pill--blue">Демо</span></td><td>Созвон 18.09</td></tr>
+                <tr><td>СтройГрупп</td><td>Ultra</td><td><span class="pill">Внедрение</span></td><td>Обучение</td></tr>
+                <tr><td>Логистика+</td><td>Business</td><td><span class="pill pill--blue">Продление</span></td><td>Допродажа модуля</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell reveal">
+        <h2>Пилот от первого демо до повторяемого канала</h2>
+        <div class="journey">
+          <article class="journey-step"><div class="journey-step__n">01</div><div><h3>Знакомство</h3><p>Разбираем вашу клиентскую базу, специализацию, текущие услуги и выбираем формат сотрудничества.</p></div></article>
+          <article class="journey-step"><div class="journey-step__n">02</div><div><h3>Обучение</h3><p>Показываем продукт, типовые сценарии, механику discovery, демо и ответы на возражения.</p></div></article>
+          <article class="journey-step"><div class="journey-step__n">03</div><div><h3>Первый клиент</h3><p>Проводим встречу и внедрение вместе, фиксируем экономику и собираем повторяемый процесс.</p></div></article>
+          <article class="journey-step"><div class="journey-step__n">04</div><div><h3>Масштабирование</h3><p>Подключаем поток лидов, кабинет партнёра, каталог модулей и регулярные допродажи.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--lavender">
+      <div class="shell enablement-layout">
+        <div class="reveal">
+          <h2>Не оставляем партнёра один на один с продажей</h2>
+          <div class="asset-list">
+            <div><strong>Партнёрская презентация</strong><span>Экономика, роли и модель сотрудничества</span></div>
+            <div><strong>Клиентская презентация</strong><span>Проблемы, возможности, тарифы и внедрение</span></div>
+            <div><strong>Скрипты и возражения</strong><span>Демо, discovery и ответы клиенту</span></div>
+            <div><strong>Договор и правила</strong><span>Лиды, выплаты, лицензии и ответственность</span></div>
+            <div><strong>Контент для сайта</strong><span>Страница программы, FAQ и форма заявки</span></div>
+            <div><strong>Обучение партнёров</strong><span>Продукт, продажи, внедрение и первая линия</span></div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <h3>Что обычно спрашивает клиент</h3>
+          <div class="faq">
+            <details open><summary>Зачем платить, если есть ChatGPT?</summary><p>VERDEECT объединяет модели, знания, роли, данные и бизнес-сценарии компании. Это рабочий контур для команды, а не личная подписка на один чат.</p></details>
+            <details><summary>Можно ли подключить наши CRM и документы?</summary><p>Да, интеграции оцениваются по конкретной системе и сценарию. Готовые и кастомные модули продаются отдельно.</p></details>
+            <details><summary>Кто отвечает за поддержку?</summary><p>Партнёр ведёт клиента и первую линию. VERDEECT поддерживает платформу и подключается к сложным техническим вопросам.</p></details>
+            <details><summary>Кому принадлежит клиент?</summary><p>В reseller-модели клиент остаётся в договорном контуре студии. В referral-модели правила закрепления лида фиксируются в партнёрском соглашении.</p></details>
+            <details><summary>Как быстро можно начать?</summary><p>Сначала обучение и совместное демо. Первый пилот позволяет проверить спрос, экономику и объём сопровождения без большого стартового риска.</p></details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-section" id="start">
+      <div class="shell cta-grid">
+        <div class="reveal">
+          <h2>Запустим партнёрский канал на первых клиентах</h2>
+          <p class="lead">Обсудим вашу B2B-базу, выберем модель, проведём обучение и вместе закроем первую сделку.</p>
+          <div class="hero__actions">
+            <a class="button button--light" href="mailto:m@mkomov.com?subject=Партнёрство с VERDEECT">Назначить встречу</a>
+            <a class="button" href="https://verdeect.ru" target="_blank" rel="noopener">Открыть verdeect.ru</a>
+          </div>
+        </div>
+        <div class="contact-stack reveal">
+          <a href="mailto:m@mkomov.com">m@mkomov.com</a>
+          <a href="tel:+79095673449">+7 909 567 34 49</a>
+          <a href="https://verdeect.ru" target="_blank" rel="noopener">verdeect.ru</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-grid"><span>VERDEECT Partner Network</span><span>Пилотная концепция партнёрской программы • 2026</span></div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const nav = document.getElementById('nav');
+    menuButton.addEventListener('click', () => {
+      const open = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', String(!open));
+      nav.classList.toggle('is-open', !open);
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+
+    const models = {
+      reseller: {
+        title: 'Вы продаёте под своим договором',
+        lead: 'Партнёр покупает VERDEECT по партнёрской цене, включает сервис в собственный договор и сам принимает оплату от клиента.',
+        benefits: [
+          'Клиент остаётся в вашем коммерческом контуре',
+          'Доход формируется из разницы между партнёрской и розничной ценой',
+          'Удобно для клиентов со сложной службой безопасности и закупками'
+        ],
+        points: ['Клиент|оплачивает студии', 'Студия|ведёт сделку', 'Лицензия|по партнёрской цене', 'Поддержка|1-я и 2-я линия'],
+        center: 'RESELLER<br/>MODEL'
+      },
+      referral: {
+        title: 'Вы передаёте лид и получаете комиссию',
+        lead: 'Партнёр регистрирует клиента и подключает VERDEECT к продаже. Клиент заключает договор с нами и платит напрямую.',
+        benefits: [
+          'VERDEECT берёт на себя коммерческую часть и договор',
+          'Партнёр получает согласованную комиссию с оплаты',
+          'Статус сделки и начисления видны в кабинете партнёра'
+        ],
+        points: ['Партнёр|регистрирует лид', 'VERDEECT|закрывает сделку', 'Клиент|платит напрямую', 'Комиссия|начисляется партнёру'],
+        center: 'REFERRAL<br/>MODEL'
+      }
+    };
+
+    const modelTitle = document.getElementById('modelTitle');
+    const modelLead = document.getElementById('modelLead');
+    const modelBenefits = document.getElementById('modelBenefits');
+    const flowIds = ['flowA','flowB','flowC','flowD'];
+    document.querySelectorAll('[data-model]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-model]').forEach(btn => btn.setAttribute('aria-pressed', String(btn === button)));
+        const data = models[button.dataset.model];
+        modelTitle.textContent = data.title;
+        modelLead.textContent = data.lead;
+        modelBenefits.innerHTML = data.benefits.map(item => `<li>${item}</li>`).join('');
+        flowIds.forEach((id, index) => {
+          const [title, subtitle] = data.points[index].split('|');
+          document.getElementById(id).innerHTML = `${title}<small>${subtitle}</small>`;
+        });
+        document.getElementById('flowCenter').innerHTML = data.center;
+      });
+    });
+
+    const tariff = document.getElementById('tariff');
+    const clients = document.getElementById('clients');
+    const commission = document.getElementById('commission');
+    const formatMoney = value => new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(value) + ' ₽';
+    function updateCalculator() {
+      const price = Number(tariff.value);
+      const clientCount = Number(clients.value);
+      const rate = Number(commission.value) / 100;
+      document.getElementById('tariffPrice').textContent = formatMoney(price);
+      document.getElementById('clientsValue').textContent = clientCount;
+      document.getElementById('commissionValue').textContent = commission.value + '%';
+      document.getElementById('monthlyIncome').textContent = formatMoney(price * clientCount * rate);
+    }
+    [tariff, clients, commission].forEach(control => control.addEventListener('input', updateCalculator));
+    updateCalculator();
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+  </script>
+</body>
+</html>
